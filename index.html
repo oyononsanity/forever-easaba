@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="A romantic interactive cinematic experience for Kashshaf." />
+  <meta name="theme-color" content="#070a0f" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="robots" content="noindex,nofollow" />
+  <link rel="preload" as="image" href="images/lock.jpg" />
+  <title>Forever Kashshaf 🤍</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="sections.css" />
+</head>
+<body class="theme-purple">
+  <noscript><p style="position:fixed;inset:0;z-index:99999;background:#05070b;color:#fff;display:grid;place-items:center;padding:24px;text-align:center">This little website needs JavaScript switched on.</p></noscript>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+  <button type="button" class="to-top" id="toTop" aria-label="Back to top">↑</button>
+
+  <!-- Dynamic Cursor Particle Canvas -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Floating Theme Switcher Controls -->
+  <button type="button" class="theme-trigger-arrow" id="themeTriggerBtn" title="Change Theme" aria-label="Toggle Theme Menu">🎨</button>
+  <div class="theme-switcher" id="themeSwitcherBox" role="region" aria-label="Theme Options">
+    <span>Theme</span>
+    <div class="theme-dots">
+      <button type="button" class="theme-dot dot-purple" data-theme="theme-purple" title="Purple & Rose" aria-label="Purple Theme"></button>
+      <button type="button" class="theme-dot dot-emerald" data-theme="theme-emerald" title="Emerald Gold" aria-label="Emerald Theme"></button>
+      <button type="button" class="theme-dot dot-sunset" data-theme="theme-sunset" title="Sunset Romance" aria-label="Sunset Theme"></button>
+      <button type="button" class="theme-dot dot-ruby" data-theme="theme-ruby" title="Midnight Ruby" aria-label="Ruby Theme"></button>
+    </div>
+  </div>
+
+
+  <!-- LOCK SCREEN -->
+  <div id="lock-screen" role="dialog" aria-modal="true" aria-labelledby="lockTitle">
+    <div class="lock-wrap">
+      <div class="lock-polaroid">
+        <div class="lock-photo"><img id="lockPhoto" alt="Us" /></div>
+        <span class="lock-bow" aria-hidden="true">🎀</span>
+        <span class="lock-bear" aria-hidden="true">🧸</span>
+      </div>
+      <div class="lock-panel">
+        <h2 id="lockTitle">Enter a passcode</h2>
+        <div class="pin-display" id="pinDisplay" aria-live="polite"></div>
+        <div class="dialpad" id="dialpad"></div>
+        <p class="lock-hint" id="lockHint">hint: it's our fav code</p>
+        <div id="errorMsg" class="error-msg" role="alert">Incorrect passcode. Try again 🤍</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HELLO WELCOME -->
+  <div id="hello-screen" aria-hidden="true"><h1 class="hello-word" id="helloWord"></h1></div>
+
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main id="main-content">
+
+    <div class="bg-zone" id="bgZone">
+      <div class="bg-zone-layer" aria-hidden="true">
+        <div class="bgz bgz-1" style="background-image:url('images/bg-1.jpg')"></div>
+        	<div class="bgz bgz-2" style="background-image:url('images/bg-2.jpg')"></div>
+        <div class="bgz-shade"></div>
+      </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero" id="hero-section">
+      <canvas id="star-canvas" aria-hidden="true"></canvas>
+      
+      <a href="#vault-section" class="hero-cue" aria-label="Scroll to begin our story"><span>scroll</span><i></i></a>
+    </section>
+
+    <!-- MEMORY VAULT SECTION -->
+    <section class="vault-section" id="vault-section">
+      <h2 class="section-title">The Memory Vault</h2>
+      <p class="section-subtitle">A timeline of moments that became unforgettable chapters 🤍</p>
+
+      <div class="svg-wrapper" id="vaultSvgWrap" aria-hidden="true">
+        <svg id="vaultSvg" xmlns="http://www.w3.org/2000/svg">
+          <path id="heart-fill" fill="var(--accent)" fill-opacity="0"/>
+          <path id="gold-path" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle id="vault-tip" r="6" fill="#fff"/>
+        </svg>
+      </div>
+
+      <div class="milestone" id="m1">
+        <article class="card">
+          <div class="card-date">The Day We First Met</div>
+          <h3>Where Everything Quietly Began</h3>
+          <div class="card-location">📍 Our First Meeting</div>
+          <p>I never knew an ordinary day could become one of the most important days of my life. Looking back now, meeting you was the beginning of my favorite story.</p>
+        </article>
+      </div>
+
+      <div class="milestone left" id="m2">
+        <article class="card">
+          <div class="card-date">Girlfriend Day Special</div>
+          <h3>The Day Time Forgot to Move</h3>
+          <div class="card-location">📍 Our Favorite Spot</div>
+          <p>We laughed over the smallest things, talked about everything, and hours felt like minutes. That day taught me that happiness is simply wherever you are.</p>
+        </article>
+      </div>
+
+      <div class="milestone" id="m3">
+        <article class="card">
+          <div class="card-date">Our First Evening Together</div>
+          <h3>Golden Hour With You</h3>
+          <div class="card-location">📍 Dhanmondi Lake Walking Track</div>
+          <p>Watching the sun slowly disappear while walking beside you felt like a scene from a movie I never wanted to end.</p>
+        </article>
+      </div>
+
+      <div class="milestone left" id="m4">
+        <article class="card">
+          <div class="card-date">Today & Forever</div>
+          <h3>Still Choosing You</h3>
+          <div class="card-location">📍 Everywhere Life Takes Us</div>
+          <p>Our story is still being written, one conversation, one smile, one memory at a time. I'll choose you in all of them.</p>
+        </article>
+      </div>
+
+      <div class="milestone" id="m5">
+        <article class="card locked-card">
+          <div class="card-date">🔒 Processing Memory Vault</div>
+          <h3>November 18, 2026</h3>
+          <div class="card-location">📍 Future Destination</div>
+          <p>⏳ Locked in processing... This special milestone will be unlocked and reached on 18th November!</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- FEATURE 2: REASONS WHY I LOVE YOU JAR -->
+    <section class="jar-section seamless-section" id="jar-section">
+      <h2 class="section-title">Reasons Why I Love You Jar</h2>
+      <p class="section-subtitle">Tap the realistic glass jar to draw a sweet love note 🤍</p>
+
+      <div class="jar-stage">
+        <div class="jar-wrapper" id="loveJar" role="button" tabindex="0" aria-label="Interactive Love Note Jar. Click to open and read a note.">
+          <canvas id="jar-particle-canvas" class="jar-particle-canvas" aria-hidden="true"></canvas>
+          <div class="jar-shadow"></div>
+          
+          <!-- Animated Premium 3D Glass Jar SVG -->
+          <svg class="jar-svg" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.65)"/>
+                <stop offset="30%" stop-color="rgba(255, 220, 230, 0.25)"/>
+                <stop offset="70%" stop-color="rgba(200, 225, 255, 0.15)"/>
+                <stop offset="100%" stop-color="rgba(255, 255, 255, 0.45)"/>
+              </linearGradient>
+              
+              <linearGradient id="lidGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#f3d09a"/>
+                <stop offset="35%" stop-color="#d49b53"/>
+                <stop offset="70%" stop-color="#ab6f2d"/>
+                <stop offset="100%" stop-color="#724312"/>
+              </linearGradient>
+
+              <linearGradient id="reflectionGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="rgba(255, 255, 255, 0.8)"/>
+                <stop offset="50%" stop-color="rgba(255, 255, 255, 0.1)"/>
+                <stop offset="100%" stop-color="rgba(255, 255, 255, 0)"/>
+              </linearGradient>
+
+              <filter id="glassShine" x="-10%" y="-10%" width="120%" height="120%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+                <feOffset dx="2" dy="3" result="offsetblur"/>
+                <feComponentTransfer>
+                  <feFuncA type="linear" slope="0.35"/>
+                </feComponentTransfer>
+                <feMerge> 
+                  <feMergeNode/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Jar Lid Group -->
+            <g id="jarLidGroup" class="jar-lid">
+              <rect x="68" y="42" width="164" height="28" rx="10" fill="url(#lidGrad)" stroke="#4a2c0b" stroke-width="2"/>
+              <rect x="80" y="30" width="140" height="14" rx="5" fill="#e8b878" stroke="#4a2c0b" stroke-width="1.5"/>
+              <path d="M 115 30 C 115 15, 185 15, 185 30" fill="none" stroke="#7a4a16" stroke-width="3.5" stroke-linecap="round"/>
+              <line x1="75" y1="56" x2="225" y2="56" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+            </g>
+
+            <!-- Jar Body -->
+            <path d="M 85 70 C 75 70, 65 85, 65 110 L 65 340 C 65 378, 95 388, 150 388 C 205 388, 235 378, 235 340 L 235 110 C 235 85, 225 70, 215 70 Z" 
+                  fill="url(#glassGrad)" stroke="rgba(255,255,255,0.75)" stroke-width="3.5" filter="url(#glassShine)"/>
+
+            <!-- Glass Specular Highlights -->
+            <path d="M 78 110 L 78 335" stroke="url(#reflectionGrad)" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 90 120 L 90 320" stroke="rgba(255, 255, 255, 0.35)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M 222 110 L 222 335" stroke="rgba(255, 255, 255, 0.3)" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 90 372 Q 150 384, 210 372" fill="none" stroke="rgba(255, 255, 255, 0.4)" stroke-width="3"/>
+
+            <!-- Folded Heart Notes Inside Jar -->
+            <g id="jarContents">
+              <path class="jar-note-item" d="M 150 200 C 120 170, 90 200, 110 230 L 150 270 L 190 230 C 210 200, 180 170, 150 200 Z" fill="#ff4757" opacity="0.95"/>
+              <path class="jar-note-item" d="M 110 130 C 90 110, 65 130, 80 155 L 110 190 L 140 155 C 155 130, 130 110, 110 130 Z" fill="#ff6b81" opacity="0.95"/>
+              <path class="jar-note-item" d="M 190 150 C 170 130, 145 150, 160 175 L 190 210 L 220 175 C 235 150, 210 130, 190 150 Z" fill="#ff878d" opacity="0.95"/>
+              <path class="jar-note-item" d="M 130 280 C 105 260, 80 280, 95 305 L 130 340 L 165 305 C 180 280, 155 260, 130 280 Z" fill="#ee5253" opacity="0.95"/>
+              <path class="jar-note-item" d="M 180 250 C 160 235, 135 255, 150 275 L 180 305 L 210 275 C 225 255, 200 235, 180 250 Z" fill="#ffa8b6" opacity="0.95"/>
+            </g>
+
+            <!-- Rising Paper Note Effect -->
+            <g id="risingNote" class="rising-note">
+              <rect x="115" y="150" width="70" height="45" rx="8" fill="#fff9f0" stroke="#ff6b81" stroke-width="2.5"/>
+              <path d="M 115 150 L 150 172 L 185 150" fill="none" stroke="#ff6b81" stroke-width="2"/>
+              <path d="M 150 162 C 145 157, 140 162, 145 167 L 150 172 L 155 167 C 160 162, 155 157, 150 162 Z" fill="#ff4757"/>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Unfolded Love Note Modal Display -->
+        <div class="jar-note-popup" id="jarNotePopup" role="dialog" aria-modal="true" aria-labelledby="noteStamp">
+          <div class="note-paper">
+            <div class="note-stamp" id="noteStamp">🤍 LOVE NOTE FOR KASHSHAF</div>
+            <p id="jarNoteText">Click the jar to pick a love note...</p>
+            <button type="button" class="close-note-btn" id="closeJarNoteBtn">Keep Note 💌</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOVE LETTER & PHOTO SECTION (sits inside .bg-zone, so it shares the bg-1 / bg-2 photo background) -->
+    <section class="loveletter-section seamless-section" id="loveletter-section">
+      <div class="ll-board" id="llBoard">
+        <div class="ll-polaroid"><img id="llPhoto1" alt="Us" /><span class="ll-name" id="llName"></span></div>
+        <span class="ll-flower" aria-hidden="true">🌸</span>
+        <span class="ll-butterfly" aria-hidden="true">🦋</span>
+        <div class="ll-title" aria-hidden="true"><span class="ll-hash">#</span><span class="ll-love">Love</span><span class="ll-sub">letter</span></div>
+        <div class="ll-envelope" aria-hidden="true"></div>
+        <div class="ll-lace"><div class="ll-paper" id="llText"></div></div>
+        <div class="ll-stamp"><img id="llPhoto2" alt="Us" /></div>
+        <span class="ll-bow" aria-hidden="true">🎀</span>
+        <div class="ll-from" id="llFrom"></div>
+      </div>
+    </section>
+
+    </div><!-- /bg-zone -->
+
+    <section class="story-clock" id="together-section" aria-labelledby="clockTitle">
+      <p class="sc-eyebrow">Our forever story</p>
+      <h2 class="sc-title" id="clockTitle">Until November 18</h2>
+      <p class="sc-lede">Every smile you gave me, every memory we made, and every dream I hold close is waiting inside. Scroll slowly, there is a lot of love here.</p>
+      <div class="rings" role="timer" aria-label="Countdown to 18 November 2026">
+        <div class="ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="trk" cx="50" cy="50" r="44"/><circle class="bar" id="rg-days" cx="50" cy="50" r="44"/></svg><b id="c-days">00</b><span>days</span></div>
+        <div class="ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="trk" cx="50" cy="50" r="44"/><circle class="bar" id="rg-hours" cx="50" cy="50" r="44"/></svg><b id="c-hours">00</b><span>hours</span></div>
+        <div class="ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="trk" cx="50" cy="50" r="44"/><circle class="bar" id="rg-mins" cx="50" cy="50" r="44"/></svg><b id="c-mins">00</b><span>mins</span></div>
+        <div class="ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="trk" cx="50" cy="50" r="44"/><circle class="bar" id="rg-secs" cx="50" cy="50" r="44"/></svg><b id="c-secs">00</b><span>secs</span></div>
+      </div>
+      <div class="journey">
+        <div class="jr-line" role="img" aria-label="How far along we are between 26 January and 18 November"><i id="jrFill"></i><em id="jrDot"></em></div>
+        <div class="jr-ends"><span>26 Jan<small>we began</small></span><strong id="jrPct">0%</strong><span>18 Nov<small>next chapter</small></span></div>
+      </div>
+      <p class="since"><b id="tg-days">0</b> days together so far <small>· <span id="tg-weeks">0</span> weeks · <span id="tg-hours">0</span> hours</small></p>
+    </section>
+
+    <section class="flight-transition" id="flight-transition" aria-label="A cinematic flight into our next outing">
+      <div class="flight-scene" aria-hidden="true">
+        <div class="flight-sky-glow"></div>
+        <div class="flight-cloud cloud-layer cloud-layer-back"></div>
+        <div class="flight-cloud cloud-layer cloud-layer-mid"></div>
+        <div class="flight-cloud cloud-layer cloud-layer-front"></div>
+        <div class="flight-horizon"></div>
+        <div class="flight-plane-model" id="flightPlaneModel">
+          <svg viewBox="0 0 600 220" role="presentation" focusable="false" aria-hidden="true">
+            <defs>
+              <linearGradient id="planeBody" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffffff"/>
+                <stop offset=".38" stop-color="#f4f6fb"/>
+                <stop offset=".72" stop-color="#cfd5e2"/>
+                <stop offset="1" stop-color="#929caf"/>
+              </linearGradient>
+              <linearGradient id="planeWing" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffffff"/>
+                <stop offset=".5" stop-color="#dfe5ef"/>
+                <stop offset="1" stop-color="#9aa6bc"/>
+              </linearGradient>
+              <linearGradient id="planeGlass" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#27445f"/>
+                <stop offset=".55" stop-color="#80b7d7"/>
+                <stop offset="1" stop-color="#eaf8ff"/>
+              </linearGradient>
+              <linearGradient id="planeStripe" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#9c86c9"/>
+                <stop offset=".55" stop-color="#c7a6e8"/>
+                <stop offset="1" stop-color="#f4b9d3"/>
+              </linearGradient>
+              <filter id="planeSoftShadow" x="-30%" y="-30%" width="160%" height="180%">
+                <feGaussianBlur stdDeviation="3"/>
+              </filter>
+            </defs>
+            <!-- soft aircraft shadow -->
+            <path d="M55 120 Q280 148 548 116 Q460 157 178 151Z" fill="#405776" opacity=".18" filter="url(#planeSoftShadow)"/>
+            <!-- rear stabilizers and tail -->
+            <path d="M105 100 L40 43 Q31 35 43 34 L77 40 L155 91Z" fill="url(#planeWing)" stroke="#8c98ad" stroke-width="1.5"/>
+            <path d="M108 112 L44 173 Q34 180 48 181 L81 173 L157 123Z" fill="url(#planeWing)" stroke="#8c98ad" stroke-width="1.5"/>
+            <path d="M95 102 L63 34 Q60 25 72 26 L112 37 L151 99Z" fill="#f7f8fc" stroke="#8d98ad" stroke-width="1.5"/>
+            <path d="M67 34 L83 37 L112 91 L96 89Z" fill="url(#planeStripe)" opacity=".95"/>
+            <!-- far wing -->
+            <path d="M225 96 L335 20 Q356 8 381 17 L315 104 L285 120Z" fill="url(#planeWing)" stroke="#9aa5b8" stroke-width="1.5"/>
+            <path d="M335 20 L365 17 L312 94 L296 98Z" fill="#f8fbff" opacity=".9"/>
+            <!-- fuselage -->
+            <path d="M78 104 Q104 88 160 88 L481 91 Q535 93 564 105 Q579 112 564 119 Q533 131 481 132 L160 135 Q104 134 78 119 Q65 112 78 104Z" fill="url(#planeBody)" stroke="#8490a5" stroke-width="1.6"/>
+            <!-- lower belly shadow -->
+            <path d="M82 116 Q130 133 190 130 L480 128 Q533 126 561 117 Q535 137 480 137 L160 140 Q105 138 82 122Z" fill="#7e8ca5" opacity=".35"/>
+            <!-- fuselage livery -->
+            <path d="M103 120 Q165 129 230 126 L490 123 Q533 121 557 114 L557 119 Q531 131 480 132 L160 135 Q115 134 103 125Z" fill="url(#planeStripe)" opacity=".95"/>
+            <!-- near wing and engine -->
+            <path d="M254 119 L357 190 Q375 202 396 193 L333 119 L301 106Z" fill="url(#planeWing)" stroke="#8996ac" stroke-width="1.5"/>
+            <path d="M358 190 L380 194 L330 127 L315 123Z" fill="#f8fbff" opacity=".85"/>
+            <path d="M293 132 Q303 126 326 132 L351 149 Q361 159 350 169 Q338 176 323 166 L294 147Z" fill="#9ca8bb" stroke="#75839b" stroke-width="1.5"/>
+            <ellipse cx="325" cy="151" rx="20" ry="12" fill="#e7ebf3" stroke="#7b879c" stroke-width="2"/>
+            <ellipse cx="326" cy="151" rx="12" ry="7" fill="#66758d"/>
+            <ellipse cx="328" cy="150" rx="7" ry="4" fill="#27364e"/>
+            <!-- cockpit windows -->
+            <path d="M531 98 Q550 100 560 107 Q548 109 531 108Z" fill="url(#planeGlass)" stroke="#61758d" stroke-width="1"/>
+            <!-- cabin windows -->
+            <g fill="url(#planeGlass)" stroke="#aab8ca" stroke-width=".6">
+              <rect x="170" y="99" width="8" height="5" rx="2"/>
+              <rect x="187" y="99" width="8" height="5" rx="2"/>
+              <rect x="204" y="99" width="8" height="5" rx="2"/>
+              <rect x="221" y="99" width="8" height="5" rx="2"/>
+              <rect x="238" y="99" width="8" height="5" rx="2"/>
+              <rect x="255" y="99" width="8" height="5" rx="2"/>
+              <rect x="272" y="99" width="8" height="5" rx="2"/>
+              <rect x="289" y="99" width="8" height="5" rx="2"/>
+              <rect x="306" y="99" width="8" height="5" rx="2"/>
+              <rect x="323" y="99" width="8" height="5" rx="2"/>
+              <rect x="340" y="99" width="8" height="5" rx="2"/>
+              <rect x="357" y="99" width="8" height="5" rx="2"/>
+              <rect x="374" y="99" width="8" height="5" rx="2"/>
+              <rect x="391" y="99" width="8" height="5" rx="2"/>
+              <rect x="408" y="99" width="8" height="5" rx="2"/>
+              <rect x="425" y="99" width="8" height="5" rx="2"/>
+              <rect x="442" y="99" width="8" height="5" rx="2"/>
+              <rect x="459" y="99" width="8" height="5" rx="2"/>
+              <rect x="476" y="99" width="8" height="5" rx="2"/>
+            </g>
+            <!-- wing lights -->
+            <circle cx="379" cy="20" r="3" fill="#f7f4ff"/>
+            <circle cx="383" cy="190" r="3" fill="#ffcedb"/>
+            <path d="M86 110 Q95 101 114 99" fill="none" stroke="#fff" stroke-width="2" opacity=".8"/>
+          </svg>
+        </div>
+        <div class="flight-window-portal" id="flightWindowPortal"><div class="portal-sky"></div><span class="portal-caption">OUR NEXT CHAPTER</span></div>
+        <div class="flight-cabin" id="flightCabin">
+          <div class="cabin-ceiling"></div><div class="cabin-light cabin-light-a"></div><div class="cabin-light cabin-light-b"></div>
+          <div class="cabin-window-row"><i></i><i></i><i></i><i></i></div>
+          <div class="cabin-seat seat-back"><div class="seat-headrest"></div><div class="seat-seam"></div></div>
+          <div class="cabin-seat seat-base"></div>
+          <div class="cabin-pass" id="cabinPass"><div class="boarding-pass-card" id="boardingPassCard">
+        <!-- Stamp Indicator -->
+        <div class="boarding-stamp" id="boardingStamp" aria-hidden="true">
+          <span>APPROVED</span>
+          <small>BOARDING 2026</small>
+        </div>
+
+        <!-- Left Main Ticket -->
+        <div class="pass-main">
+          <div class="pass-header">
+            <div class="pass-airline">
+              <span class="airline-logo" aria-hidden="true">✈️</span>
+              <span class="airline-name">FOREVER AIRWAYS</span>
+            </div>
+            <div class="pass-class">FIRST CLASS 🤍</div>
+          </div>
+
+          <div class="pass-route">
+            <div class="route-point">
+              <span class="city-code" id="passOriginCode">ICN</span>
+              <span class="city-name" id="passOriginName">Seoul</span>
+            </div>
+            <div class="route-icon" aria-hidden="true">
+              <div class="plane-line"></div>
+              <span class="plane-symbol">✈</span>
+            </div>
+            <div class="route-point">
+              <span class="city-code" id="passDestCode">TYO</span>
+              <span class="city-name" id="passDestName">Tokyo</span>
+            </div>
+          </div>
+
+          <div class="pass-details-grid">
+            <div>
+              <div class="detail-label">PASSENGER</div>
+              <div class="detail-value" id="passPassenger">Kashshaf & Me</div>
+            </div>
+            <div>
+              <div class="detail-label">FLIGHT</div>
+              <div class="detail-value" id="passFlightNo">LOVE-2026</div>
+            </div>
+            <div>
+              <div class="detail-label">BOARDING TIME</div>
+              <div class="detail-value" id="passBoardingTime">19:00</div>
+            </div>
+            <div>
+              <div class="detail-label">GATE</div>
+              <div class="detail-value" id="passGate">A18</div>
+            </div>
+            <div>
+              <div class="detail-label">SEAT</div>
+              <div class="detail-value" id="passSeat">01A</div>
+            </div>
+          </div>
+
+          <!-- Scratch Canvas Reveal Container -->
+          <div class="scratch-section">
+            <div class="scratch-label">SECRET DESTINATION SURPRISE</div>
+            <div class="scratch-box" id="scratchBox">
+              <div class="scratch-underlay" id="scratchHiddenText">✨ SkyFall ✨</div>
+              <canvas id="scratchCanvas" aria-label="Scratch card to reveal destination"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Perforated Divider -->
+        <div class="pass-perforation" aria-hidden="true">
+          <div class="notch top-notch"></div>
+          <div class="dashed-line"></div>
+          <div class="notch bottom-notch"></div>
+        </div>
+
+        <!-- Right Stub -->
+        <div class="pass-stub">
+          <div class="stub-header">BOARDING PASS</div>
+          <div class="stub-details">
+            <div>
+              <span class="detail-label">PASSENGER</span>
+              <span class="stub-val" id="stubPassenger">Esaba & Oyon</span>
+            </div>
+            <div>
+              <span class="detail-label">DESTINATION</span>
+              <span class="stub-val" id="stubDest">Skyfall, Mohakhali</span>
+            </div>
+            <div>
+              <span class="detail-label">SEAT</span>
+              <span class="stub-val" id="stubSeat">01A</span>
+            </div>
+          </div>
+          
+          <!-- Barcode & QR Code Group -->
+          <div class="stub-codes">
+            <div class="stub-barcode">
+              <svg id="barcodeSvg" viewBox="0 0 140 40" aria-label="Flight Barcode"></svg>
+            </div>
+            <div class="stub-qr">
+              <svg id="qrSvg" viewBox="0 0 40 40" aria-label="Flight QR Code"></svg>
+            </div>
+          </div>
+        </div>
+      </div></div>
+        </div>
+      </div>
+      <div class="flight-copy" id="flightCopy"><span>Next stop</span><strong>Somewhere lovely, with you.</strong><small>Scroll to drift through the clouds</small></div>
+      <div class="flight-progress" aria-hidden="true"><span></span></div>
+    </section>
+
+    <section class="route-map-section seamless-section" id="route-map-section" aria-labelledby="routeMapTitle">
+      <p class="route-kicker">The plan, the place, the little moments between</p>
+      <h2 class="section-title" id="routeMapTitle">A Little Journey Together</h2>
+      <p class="section-subtitle">From Old Dhaka to a table above Mohakhali.</p>
+      <div class="rt-card">
+        <div class="rt-map">
+          <svg viewBox="0 0 640 400" role="img" aria-label="Illustrative route: Lalbagh, Dhanmondi, Farmgate, Skyfall Restaurant in Mohakhali">
+            <defs>
+              <pattern id="rtGrid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="rgba(255,255,255,.06)"/></pattern>
+              <linearGradient id="rtLine" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#ffb3c7"/><stop offset="1" stop-color="#c9a7ff"/></linearGradient>
+            </defs>
+            <rect width="640" height="400" fill="url(#rtGrid)"/>
+            <path class="rt-river" d="M-10 372 C70 352 110 398 210 376 S330 392 420 410"/>
+            <ellipse class="rt-lake" cx="196" cy="214" rx="38" ry="13" transform="rotate(-38 196 214)"/>
+            <path class="rt-road" d="M0 120 C120 140 200 90 330 130 S560 150 650 110"/><path class="rt-road" d="M470 0 C450 120 500 220 430 400"/><path class="rt-road" d="M0 250 C140 230 220 330 360 300 S560 270 650 330"/>
+            <path class="rt-glow" d="M90 330 C150 320 170 270 230 250 S340 210 400 170 S500 110 560 70"/>
+            <path id="routePath" class="route-dash" pathLength="1" d="M90 330 C150 320 170 270 230 250 S340 210 400 170 S500 110 560 70"/>
+            <circle class="rt-dot" r="6"><animateMotion dur="8s" repeatCount="indefinite" rotate="auto"><mpath href="#routePath"/></animateMotion></circle>
+            <g class="rt-pin"><circle cx="90" cy="330" r="13"/><text x="90" y="335" text-anchor="middle">1</text></g>
+            <g class="rt-pin"><circle cx="230" cy="250" r="11"/><text x="230" y="255" text-anchor="middle">2</text></g>
+            <g class="rt-pin"><circle cx="400" cy="170" r="11"/><text x="400" y="175" text-anchor="middle">3</text></g>
+            <g class="rt-pin rt-end"><circle cx="560" cy="70" r="15"/><text x="560" y="76" text-anchor="middle">4</text></g>
+          </svg>
+        </div>
+        <ol class="rt-stops">
+          <li><b>Lalbagh</b><span>Where we set off</span></li>
+          <li><b>Dhanmondi</b><span>Past our golden-hour lake</span></li>
+          <li><b>Farmgate</b><span>Almost there</span></li>
+          <li><b>Skyfall Restaurant</b><span>10th floor, SKS Tower, Mohakhali</span></li>
+        </ol>
+      </div>
+      <div class="rt-actions">
+        <a class="rt-btn" href="https://www.google.com/maps/dir/?api=1&origin=Lalbagh%2C+Dhaka%2C+Bangladesh&destination=Skyfall+Restaurant%2C+SKS+Tower%2C+Mohakhali%2C+Dhaka%2C+Bangladesh" target="_blank" rel="noopener noreferrer">Open live directions</a>
+        <button type="button" class="rt-btn ghost" id="routeReplayBtn">Replay route</button>
+      </div>
+      <p class="route-disclaimer">Illustration only. Check a live map for roads, traffic and travel time.</p>
+    </section>
+
+    <section class="tree-section" id="tree-section">
+      <div class="tree-header">
+        <h2 class="section-title">Our Blooming Love Tree 💜</h2>
+        <p class="section-subtitle">Tap below to shoot Cupid's arrow and bloom our tree of love!</p>
+      </div>
+      
+      <div class="tree-container-box tree-stage">
+        <canvas id="tree-canvas" width="800" height="640" aria-label="Interactive Blooming Love Trees Canvas"></canvas>
+        <p class="tree-hint" id="treeHint" role="status"></p>
+        <button type="button" class="tree-interactive-trigger" id="shootArrowBtn">🏹 Shoot Arrow & Bloom Tree ✨</button>
+      </div>
+    </section>
+
+    <!-- QUIZ SECTION -->
+    <section class="quiz-section seamless-section" id="quiz-section">
+      <h2 class="section-title">How Well Do You Know Us? ✨</h2>
+      <p class="section-subtitle">Test your memory of our favorite moments 💜</p>
+      <div class="quiz-stage">
+        <div class="quiz-deco" id="quizDeco" aria-hidden="true"></div>
+        <div class="quiz-card" id="quizCard">
+          <div class="quiz-ribbon">💌 Love Quiz</div>
+          <span class="quiz-corner tl" aria-hidden="true">🌸</span>
+          <span class="quiz-corner br" aria-hidden="true">🎀</span>
+          <div class="quiz-progress" id="quizProgress" aria-hidden="true"></div>
+          <div class="quiz-question" id="quizQuestion">Loading question...</div>
+          <div class="quiz-options" id="quizOptions" role="group" aria-label="Quiz Answer Options"></div>
+          <div class="quiz-feedback" id="quizFeedback" role="status"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRAND FIREWORKS SECTION -->
+    <section class="grand-firework-section" id="grandFireworkSection">
+      <canvas id="grand-firework-canvas" aria-hidden="true"></canvas>
+      
+      <div class="grand-content" id="grandContent">
+        <h2 class="section-title">Forever for Kashshaf 💝</h2>
+        <p class="section-subtitle">Tap the pulse button to launch our continuous celebration</p>
+        <button type="button" class="grand-pulse-btn" id="grandPulseBtn" aria-label="Launch Celebration Fireworks">🤍</button>
+      </div>
+
+      <div class="grand-msg" id="grandMsg">
+        <h2>I love you Kashshaf 🤍</h2>
+        <div class="love-note" id="loveNote" aria-live="polite"></div>
+        <button type="button" class="reset-firework-btn" id="resetFireworkBtn">Replay Celebration ✨</button>
+      </div>
+    </section>
+
+    <!-- FEATURE 5: JOURNEY ROADMAP -->
+    <section class="roadmap-section seamless-section" id="roadmapSection">
+      <h2 class="section-title">Journey Roadmap</h2>
+      <p class="section-subtitle">A visual walkthrough of our cherished highlights 🤍</p>
+      
+      <div class="carousel-container" id="roadmapCarousel" role="region" aria-label="Journey Roadmap Carousel">
+        <div class="carousel-track" id="carouselTrack"></div>
+      </div>
+
+      <div class="slide-info">
+        <div class="slide-title" id="currentSlideTitle">1. The Spark</div>
+        <div class="slide-desc" id="currentSlideDesc">Where two strangers quietly became each other's favorite person.</div>
+      </div>
+
+      <div class="controls-wrapper">
+        <button type="button" class="nav-btn" id="prevSlideBtn" aria-label="Previous Slide">‹</button>
+        <div class="progress-bar-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="roadmapProgress">
+          <div class="progress-bar-fill" id="progressFill"></div>
+        </div>
+        <button type="button" class="nav-btn" id="nextSlideBtn" aria-label="Next Slide">›</button>
+      </div>
+
+      <!-- Audio Background Vibe Widget -->
+      <button type="button" class="audio-widget" id="audioToggle" aria-label="Toggle Background Music">
+        <span class="audio-status-text" id="audioStatus">🎵 Background Vibe Paused</span>
+        <div class="audio-waves" id="audioWaves" aria-hidden="true">
+          <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+        </div>
+      </button>
+      <audio id="bgMusic" loop preload="none"></audio>
+    </section>
+
+    <!-- NEW: IMMERSIVE CAROUSEL (background follows the active slide) -->
+    <section class="vibe-section" id="vibe-section">
+      <div class="vibe-bg" aria-hidden="true"><div class="vb vb-a"></div><div class="vb vb-b"></div><div class="vibe-shade"></div></div>
+      <h2 class="section-title">Moments I Replay 🎞️</h2>
+      <p class="section-subtitle">Swipe, drag or tap a card, the whole scene follows the memory 🤍</p>
+      <div class="vibe-carousel" id="vibeCarousel" role="region" aria-roledescription="carousel" aria-label="Moments carousel" tabindex="0"></div>
+      <div class="vibe-info"><h3 id="vibeTitle"></h3><p id="vibeDesc"></p></div>
+      <div class="vibe-controls">
+        <button type="button" class="nav-btn" id="vibePrev" aria-label="Previous moment">‹</button>
+        <div class="vibe-dots" id="vibeDots"></div>
+        <button type="button" class="nav-btn" id="vibeNext" aria-label="Next moment">›</button>
+      </div>
+    </section>
+
+    <!-- THE EYES I REMEMBER -->
+    <section class="eyes-memory-section" id="eyes-memory-section">
+      <div class="eyes-memory-content">
+        <span class="eyes-memory-label">A LOOK I WILL NEVER FORGET 🤍</span>
+
+        <h2>The Eyes I Remember</h2>
+
+        <div class="eyes-memory-divider"></div>
+
+        <p class="eyes-memory-quote">
+          “In a world full of faces,<br>
+          my eyes will always search for yours.”
+        </p>
+
+        <p class="eyes-memory-caption">
+          Some feelings are never spoken.
+          They live quietly, in a single look. ♡
+        </p>
+      </div>
+
+      <span class="eyes-memory-heart" aria-hidden="true">♡</span>
+    </section>
+
+
+    <!-- DREAMY MEMORY CHAPTERS: uses existing project images; no personal events are invented -->
+    <section class="dreamy-memory-carousel" id="dreamy-memory-carousel" aria-labelledby="dreamyCarouselTitle">
+      <div class="dreamy-section-glow" aria-hidden="true"></div>
+      <p class="dreamy-kicker">A FEW FRAMES TO KEEP</p>
+      <h2 class="section-title" id="dreamyCarouselTitle">Little Moments, Softly Kept</h2>
+      <p class="section-subtitle">A small gallery of moments, with words for the feelings photographs can hold.</p>
+      <div class="dreamy-carousel-shell">
+        <button class="dreamy-carousel-arrow" id="dreamyPrev" type="button" aria-label="Previous memory">‹</button>
+        <div class="dreamy-carousel-window" id="dreamyCarouselWindow" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Dreamy memory images">
+          <div class="dreamy-carousel-track" id="dreamyCarouselTrack">
+            <article class="dreamy-memory-card is-active" data-title="A Quiet Kind of Magic" data-quote="Some moments are quiet, yet they stay with us the longest."><img src="images/roadmap-2.jpg" alt="Memory gallery photograph" loading="lazy"><div class="dreamy-card-glass"><span>01 / A MOMENT</span><h3>A Quiet Kind of Magic</h3><p>Some moments are quiet, yet they stay with us the longest.</p></div></article>
+            <article class="dreamy-memory-card" data-title="Where Time Slows" data-quote="The loveliest memories are the ones we wish could last a little longer."><img src="images/vibe-3.jpg" alt="Memory gallery photograph" loading="lazy"><div class="dreamy-card-glass"><span>02 / A FEELING</span><h3>Where Time Slows</h3><p>The loveliest memories are the ones we wish could last a little longer.</p></div></article>
+            <article class="dreamy-memory-card" data-title="A Little Light" data-quote="Even an ordinary day can hold a little light worth remembering."><img src="images/roadmap-5.jpg" alt="Memory gallery photograph" loading="lazy"><div class="dreamy-card-glass"><span>03 / A THOUGHT</span><h3>A Little Light</h3><p>Even an ordinary day can hold a little light worth remembering.</p></div></article>
+            <article class="dreamy-memory-card" data-title="A Page Still Unwritten" data-quote="There is beauty in the pages we have not written yet."><img src="images/vibe-4.jpg" alt="Memory gallery photograph" loading="lazy"><div class="dreamy-card-glass"><span>04 / WHAT'S NEXT</span><h3>A Page Still Unwritten</h3><p>There is beauty in the pages we have not written yet.</p></div></article>
+          </div>
+        </div>
+        <button class="dreamy-carousel-arrow" id="dreamyNext" type="button" aria-label="Next memory">›</button>
+      </div>
+      <div class="dreamy-carousel-footer"><span id="dreamyCarouselCount">01 / 04</span><div class="dreamy-carousel-dots" id="dreamyCarouselDots" aria-label="Choose a memory"></div></div>
+    </section>
+
+    <section class="dreamy-quote-chapter quote-chapter-one" aria-label="A thought to keep">
+      <div class="dreamy-quote-panel"><span class="dreamy-kicker">A THOUGHT TO KEEP</span><p>“Not every beautiful thing needs to be loud; some of the best feelings arrive softly.”</p><span class="dreamy-quote-line"></span></div>
+    </section>
+
+    <section class="dreamy-quote-chapter quote-chapter-two" aria-label="A page still unwritten">
+      <div class="dreamy-quote-panel"><span class="dreamy-kicker">A PAGE STILL UNWRITTEN</span><p>“May the moments ahead be gentle, the memories meaningful, and the little things worth noticing.”</p><span class="dreamy-quote-line"></span></div>
+    </section>
+
+    <!-- 3D MEMORY GALAXY -->
+    <section class="galaxy3d-section seamless-section" id="galaxy3d-section">
+      <h2 class="section-title">Our Memory Galaxy 🌌</h2>
+      <p class="section-subtitle">Every memory of us floats here like a star. Tap to explore, then drag, zoom and glide through our universe ✨</p>
+      <div class="g3d-stage" id="g3dStage">
+        <canvas class="g3d-sky" id="g3dSky" aria-hidden="true"></canvas>
+        <div class="g3d-scene"><div class="g3d-world" id="g3dWorld"></div></div>
+        <button type="button" class="g3d-enter" id="g3dEnter">✨ Tap to explore our galaxy</button>
+        <div class="g3d-ui" id="g3dUi">
+          <p class="g3d-help">Drag to orbit · Scroll / pinch to zoom · Two fingers or right-drag to glide</p>
+          <div class="g3d-tools">
+            <button type="button" id="g3dIn" aria-label="Zoom in">＋</button>
+            <button type="button" id="g3dOut" aria-label="Zoom out">－</button>
+            <button type="button" id="g3dReset" aria-label="Reset view">⟲</button>
+            <button type="button" id="g3dExit" aria-label="Leave galaxy and scroll page">✕</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INFINITY LOOP -->
+    <section class="infinity-section seamless-section" id="infinity-section">
+      <h2 class="section-title">Infinity of Us ∞</h2>
+      <p class="section-subtitle">Our memories keep falling into the loop, going on and on, forever 🤍</p>
+      <div class="inf-stage" id="infStage">
+        <svg class="inf-svg" id="infSvg" aria-hidden="true">
+          <defs>
+            <linearGradient id="infGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ff9fb4"/><stop offset=".5" stop-color="#c9a7ff"/><stop offset="1" stop-color="#7fd1ff"/>
+            </linearGradient>
+          </defs>
+          <path id="infGlow" class="inf-glow" fill="none" stroke="url(#infGrad)"/>
+          <path id="infCore" class="inf-core-line" fill="none" stroke="url(#infGrad)"/>
+        </svg>
+        <div class="inf-core" aria-hidden="true">∞</div>
+        <div class="inf-cards" id="infCards"></div>
+      </div>
+    </section>
+
+    <section class="promise-section seamless-section" id="promise-section">
+      <h2 class="section-title">Small Promises</h2>
+      <p class="section-subtitle">Nothing grand. Just things I mean.</p>
+      <ol class="promise-list" id="promiseList"></ol>
+    </section>
+
+    <!-- FEATURED MUSIC SECTION -->
+    <section class="music-player-section galaxy-section seamless-section" id="featuredMusicSection">
+      <div class="galaxy-layer" aria-hidden="true"><canvas id="songSky"></canvas></div>
+      <h2 class="section-title">Our Special Song</h2>
+      <div class="song-card" id="songLayout">
+        <div class="song-player-column">
+        <div class="song-player-main">
+        <div class="song-art" id="vinylSet" aria-hidden="true"><span class="song-disc"></span><img id="sleeveImg" class="song-cover" alt="" /></div>
+        <div class="song-body">
+          <p class="song-kicker">Now playing</p>
+          <h3 class="song-title" id="featuredSongTitle">Our Little Universe</h3>
+          <p class="song-artist" id="featuredSongArtist"></p>
+          <div class="song-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="song-progress" id="songProgressBar" role="slider" aria-label="Song progress"><div class="song-progress-fill" id="featuredProgressFill"></div></div>
+          <div class="song-time-row"><span id="songCurrentTime">0:00</span><span id="songDuration">0:00</span></div>
+          <button type="button" class="song-play-btn" id="featuredPlayBtn" aria-label="Play song">▶</button>
+          <p class="song-note" id="songNoteText"></p>
+          <p id="songPlaybackHint" class="song-playback-hint" aria-live="polite"></p>
+        </div>
+        </div>
+        <p class="song-player-footnote">A little space for the melody, and the words that move with it.</p>
+        </div>
+      
+      </div>
+      <audio id="featuredSongAudio" preload="none"></audio>
+    </section>
+
+    <!-- FEATURE 6: VIDEO SECTION -->
+    <section class="video-section seamless-section" id="video-section">
+      <h2 class="section-title">Our Video Memories 🎥</h2>
+      <p class="section-subtitle">Moments captured in motion, playing seamlessly as you scroll 🤍</p>
+
+      <div class="video-grid" id="videoGrid"></div>
+    </section>
+
+    <!-- A LETTER, JUST FOR YOU: red envelope + bouquet that opens into a stamped letter -->
+    <section class="env-section" id="env-section" aria-labelledby="envTitle">
+
+      <!-- Shared SVG parts (roses, gradients, stamp perforation). Zero-size, not display:none, so Safari still resolves them. -->
+      <svg class="env-defs" width="0" height="0" aria-hidden="true" focusable="false">
+        <defs>
+          <radialGradient id="roseShade" cx=".35" cy=".3" r=".8">
+            <stop offset="0" stop-color="#fff" stop-opacity=".28"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".28"/>
+          </radialGradient>
+          <linearGradient id="paperG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fbf4e2"/><stop offset="1" stop-color="#eadcb9"/></linearGradient>
+          <linearGradient id="envBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cb2d34"/><stop offset="1" stop-color="#a8222a"/></linearGradient>
+          <linearGradient id="featherG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8212f"/><stop offset="1" stop-color="#76091a"/></linearGradient>
+          <linearGradient id="nibG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f1f3f6"/><stop offset="1" stop-color="#8a8f99"/></linearGradient>
+          <linearGradient id="sealG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e8374b"/><stop offset="1" stop-color="#8f0c20"/></linearGradient>
+          <linearGradient id="heartG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e03247"/><stop offset="1" stop-color="#a5132a"/></linearGradient>
+          <mask id="stampPerf" maskUnits="userSpaceOnUse" x="0" y="0" width="110" height="130">
+            <rect width="110" height="130" fill="#fff"/><g fill="#000"><circle cx="5.5" cy="0" r="4.2"/><circle cx="5.5" cy="130" r="4.2"/><circle cx="16.5" cy="0" r="4.2"/><circle cx="16.5" cy="130" r="4.2"/><circle cx="27.5" cy="0" r="4.2"/><circle cx="27.5" cy="130" r="4.2"/><circle cx="38.5" cy="0" r="4.2"/><circle cx="38.5" cy="130" r="4.2"/><circle cx="49.5" cy="0" r="4.2"/><circle cx="49.5" cy="130" r="4.2"/><circle cx="60.5" cy="0" r="4.2"/><circle cx="60.5" cy="130" r="4.2"/><circle cx="71.5" cy="0" r="4.2"/><circle cx="71.5" cy="130" r="4.2"/><circle cx="82.5" cy="0" r="4.2"/><circle cx="82.5" cy="130" r="4.2"/><circle cx="93.5" cy="0" r="4.2"/><circle cx="93.5" cy="130" r="4.2"/><circle cx="104.5" cy="0" r="4.2"/><circle cx="104.5" cy="130" r="4.2"/><circle cx="0" cy="6.5" r="4.2"/><circle cx="110" cy="6.5" r="4.2"/><circle cx="0" cy="19.5" r="4.2"/><circle cx="110" cy="19.5" r="4.2"/><circle cx="0" cy="32.5" r="4.2"/><circle cx="110" cy="32.5" r="4.2"/><circle cx="0" cy="45.5" r="4.2"/><circle cx="110" cy="45.5" r="4.2"/><circle cx="0" cy="58.5" r="4.2"/><circle cx="110" cy="58.5" r="4.2"/><circle cx="0" cy="71.5" r="4.2"/><circle cx="110" cy="71.5" r="4.2"/><circle cx="0" cy="84.5" r="4.2"/><circle cx="110" cy="84.5" r="4.2"/><circle cx="0" cy="97.5" r="4.2"/><circle cx="110" cy="97.5" r="4.2"/><circle cx="0" cy="110.5" r="4.2"/><circle cx="110" cy="110.5" r="4.2"/><circle cx="0" cy="123.5" r="4.2"/><circle cx="110" cy="123.5" r="4.2"/></g>
+          </mask>
+          <symbol id="rose" viewBox="-50 -50 100 100">
+            <circle r="46" fill="#8a1220"/>
+            <g fill="#b81d2c" stroke="#6e0b17" stroke-width=".9">
+              <ellipse cy="-27" rx="22" ry="20"/><ellipse cy="-27" rx="22" ry="20" transform="rotate(72)"/><ellipse cy="-27" rx="22" ry="20" transform="rotate(144)"/><ellipse cy="-27" rx="22" ry="20" transform="rotate(216)"/><ellipse cy="-27" rx="22" ry="20" transform="rotate(288)"/>
+            </g>
+            <g fill="#d02a39" stroke="#7d0f1b" stroke-width=".8">
+              <ellipse cy="-15" rx="16" ry="14" transform="rotate(20)"/><ellipse cy="-15" rx="16" ry="14" transform="rotate(110)"/><ellipse cy="-15" rx="16" ry="14" transform="rotate(200)"/><ellipse cy="-15" rx="16" ry="14" transform="rotate(290)"/>
+            </g>
+            <g fill="#c32232" stroke="#7d0f1b" stroke-width=".8">
+              <ellipse cy="-8" rx="11" ry="10"/><ellipse cy="-8" rx="11" ry="10" transform="rotate(120)"/><ellipse cy="-8" rx="11" ry="10" transform="rotate(240)"/>
+            </g>
+            <path d="M0 -3 q6 -2 6 4 q0 8 -9 7 q-10 -2 -8 -12 q2 -10 14 -9" fill="none" stroke="#6e0b17" stroke-width="1.3" stroke-linecap="round"/>
+            <circle r="46" fill="url(#roseShade)"/>
+          </symbol>
+        </defs>
+      </svg>
+
+      <h2 class="section-title" id="envTitle">A Letter, Just For You 💌</h2>
+      <p class="section-subtitle" id="envHint">Tap the envelope to open it</p>
+
+      <!-- SCENE 1: closed state (envelope + bouquet) -->
+      <div class="env-scene" id="envScene">
+        <button type="button" class="env-open" id="envWrap" aria-expanded="false" aria-controls="envLetter" aria-label="Open the letter">
+          <svg viewBox="100 30 612 366" aria-hidden="true" focusable="false">
+            <!-- second envelope peeking out behind -->
+            <rect x="150" y="168" width="262" height="172" rx="4" fill="#8c1420" transform="rotate(7 270 250)"/>
+            <!-- main envelope: back panel + open flap -->
+            <rect x="140" y="152" width="260" height="178" fill="#9c1f27"/>
+            <path d="M140 154 L270 58 L400 154Z" fill="#a8222b"/>
+            <path d="M152 154 L270 70 L388 154Z" fill="#8e1a22" opacity=".5"/>
+            <!-- letter that slides up when opened -->
+            <g class="env-paper-g">
+              <g transform="rotate(-2 270 170)">
+                <rect x="162" y="88" width="216" height="170" rx="3" fill="#f1e8d8"/>
+                <text x="270" y="150" text-anchor="middle" fill="#8f1a2b"><tspan class="env-f">F</tspan><tspan class="env-t">lower for</tspan></text>
+                <text x="270" y="204" text-anchor="middle" fill="#8f1a2b" class="env-you">YOU!!</text>
+              </g>
+            </g>
+            <!-- front pocket -->
+            <path d="M140 156 L270 262 L400 156 L400 330 L140 330Z" fill="url(#envBody)"/>
+            <path d="M140 156 L270 262 L140 330Z" fill="#fff" opacity=".06"/>
+            <path d="M400 156 L270 262 L400 330Z" fill="#000" opacity=".08"/>
+            <path d="M140 330 L270 262 L400 330Z" fill="#000" opacity=".12"/>
+            <path d="M140 156 L270 262 L400 156 M140 330 L270 262 L400 330" fill="none" stroke="#000" stroke-opacity=".2" stroke-width="1.6" stroke-linejoin="round"/>
+            <!-- bouquet -->
+            <g transform="translate(520 205) rotate(30)">
+              <g class="bq-sway">
+                <path d="M-118 -66 C-124 -112 -78 -134 -30 -130 L62 -134 C112 -120 132 -86 124 -34 C118 30 78 92 44 124 L30 176 L-30 176 L-50 120 C-98 78 -116 20 -118 -66Z" fill="#efe2c2" stroke="#cdb98c" stroke-width="1.5"/>
+                <g fill="none" stroke="#8d7a55" stroke-width="1.4" opacity=".35"><path d="M-98 -84h52M-98 -72h38M-98 -60h46M70 -100h40M76 -88h30"/></g>
+                <rect x="60" y="-122" width="26" height="30" fill="none" stroke="#b9533f" stroke-width="1.4" opacity=".5"/>
+                <g fill="#3f6b3a" stroke="#2c4f2a" stroke-width="1">
+                  <ellipse cx="-96" cy="16" rx="30" ry="12" transform="rotate(-30 -96 16)"/><ellipse cx="-82" cy="58" rx="28" ry="11" transform="rotate(-58 -82 58)"/><ellipse cx="100" cy="30" rx="28" ry="11" transform="rotate(38 100 30)"/><ellipse cx="-20" cy="-104" rx="26" ry="10" transform="rotate(-12 -20 -104)"/>
+                </g>
+                <use href="#rose" x="-13" y="-115" width="62" height="62" transform="rotate(20 18 -84)"/>
+          <use href="#rose" x="-76" y="-94" width="64" height="64" transform="rotate(-15 -44 -62)"/>
+          <use href="#rose" x="36" y="-82" width="60" height="60" transform="rotate(40 66 -52)"/>
+          <use href="#rose" x="-106" y="-44" width="60" height="60" transform="rotate(10 -76 -14)"/>
+          <use href="#rose" x="63" y="-37" width="46" height="46" transform="rotate(-30 86 -14)"/>
+          <use href="#rose" x="15" y="-37" width="70" height="70" transform="rotate(25 50 -2)"/>
+          <use href="#rose" x="-82" y="-6" width="56" height="56" transform="rotate(-40 -54 22)"/>
+          <use href="#rose" x="-24" y="4" width="60" height="60" transform="rotate(15 6 34)"/>
+          <use href="#rose" x="-55" y="-77" width="86" height="86" transform="rotate(-8 -12 -34)"/>
+                <path d="M-14 182 L-18 208 M0 182 V212 M14 182 L18 208" stroke="#6b5a30" stroke-width="4" stroke-linecap="round"/>
+                <path d="M-104 -6 C-66 34 -22 44 0 44 C22 44 66 34 104 -6 C112 52 70 112 36 138 L24 182 L-24 182 L-36 138 C-70 112 -112 52 -104 -6Z" fill="url(#paperG)" stroke="#cdb98c" stroke-width="1.5"/>
+                <path d="M-62 40 L-22 150 M62 40 L22 150" fill="none" stroke="#786432" stroke-opacity=".22" stroke-width="1.4"/>
+                <!-- pink ribbon -->
+                <g fill="#ec92a8" stroke="#c4647d" stroke-width="1.4" stroke-linejoin="round">
+                  <path d="M0 152 C-32 128 -50 152 -36 168 C-24 180 -8 164 0 152Z"/>
+                  <path d="M0 152 C32 128 50 152 36 168 C24 180 8 164 0 152Z"/>
+                  <path d="M-2 154 L-20 194 L-9 189 L-4 200 L4 158Z"/>
+                  <circle cx="0" cy="154" r="6.5" fill="#e2788f"/>
+                </g>
+              </g>
+            </g>
+          </svg>
+        </button>
+      </div>
+
+      <!-- SCENE 2: the opened letter -->
+      <div class="lt-scene" id="envLetter" hidden>
+        <div class="lt-stage" id="ltStage">
+          <div class="lt-deco lt-heart" aria-hidden="true"><svg viewBox="0 0 100 92">
+            <path d="M50 90 C10 60 -2 32 12 15 C26 1 44 6 50 22 C56 6 74 1 88 15 C102 32 90 60 50 90Z" fill="#f0b6bd"/>
+            <path d="M50 84 C14 57 4 34 16 19 C28 7 44 11 50 26 C56 11 72 7 84 19 C96 34 86 57 50 84Z" fill="url(#heartG)"/>
+          </svg></div>
+          <div class="lt-deco lt-stamp-pink" aria-hidden="true"><svg viewBox="0 0 110 130">
+            <g mask="url(#stampPerf)"><rect width="110" height="130" fill="#f6d9db"/>
+              <rect x="11" y="11" width="88" height="108" fill="#fdf0f0" stroke="#d96a75" stroke-width="1.2"/>
+              <path d="M55 62 C36 48 38 30 49 29 C53 29 55 32 55 35 C55 32 57 29 61 29 C72 30 74 48 55 62Z" fill="#d23a4d"/>
+              <text x="55" y="86" text-anchor="middle" class="st-script" fill="#c8404f" font-size="26">Happy</text>
+              <text x="55" y="108" text-anchor="middle" class="st-script" fill="#c8404f" font-size="26">Love</text>
+              <text x="17" y="23" class="st-num" fill="#c8404f">1150</text><text x="93" y="23" text-anchor="end" class="st-num" fill="#c8404f">2026</text>
+            </g>
+          </svg></div>
+          <div class="lt-deco lt-stamp-white" aria-hidden="true"><svg viewBox="0 0 110 130">
+            <g mask="url(#stampPerf)"><rect width="110" height="130" fill="#fffdf9"/>
+              <rect x="11" y="11" width="88" height="108" fill="none" stroke="#e5d6d6" stroke-width="1.2"/>
+              <path d="M18 60 q9 -8 18 0 t18 0 t18 0 t18 0 M18 72 q9 -8 18 0 t18 0 t18 0 t18 0" fill="none" stroke="#dccaca" stroke-width="1.2"/>
+            </g>
+          </svg></div>
+
+          <article class="lt-card" aria-label="A letter for you">
+            <div class="lt-text" id="envLetterBody"></div>
+          </article>
+
+          <div class="lt-deco lt-seal" aria-hidden="true"><svg viewBox="0 0 100 100">
+            <path d="M96.0 50.0 L96.1 52.1 L95.9 54.1 L95.3 56.1 L94.5 58.1 L93.7 60.0 L92.9 61.8 L92.2 63.7 L91.5 65.6 L90.8 67.4 L89.9 69.2 L89.0 71.0 L87.9 72.6 L86.6 74.1 L85.2 75.6 L83.7 76.9 L82.4 78.3 L81.1 79.7 L79.9 81.3 L78.9 83.0 L77.8 84.9 L76.7 86.7 L75.4 88.5 L73.9 90.0 L72.1 91.1 L70.1 91.8 L68.0 92.0 L65.7 91.8 L63.4 91.4 L61.3 90.9 L59.2 90.4 L57.3 90.2 L55.5 90.3 L53.7 90.8 L51.9 91.5 L50.0 92.3 L48.1 93.0 L46.1 93.6 L44.0 93.9 L42.0 93.9 L40.0 93.6 L38.1 93.1 L36.2 92.4 L34.4 91.6 L32.6 90.8 L30.7 90.1 L28.9 89.3 L27.1 88.4 L25.3 87.4 L23.7 86.1 L22.3 84.7 L21.1 83.1 L20.0 81.4 L19.0 79.6 L18.0 77.9 L16.9 76.4 L15.6 75.0 L14.1 73.7 L12.3 72.5 L10.5 71.3 L8.6 69.9 L7.0 68.4 L5.7 66.6 L4.9 64.7 L4.6 62.5 L4.7 60.3 L5.3 58.1 L6.1 56.0 L6.9 53.9 L7.6 51.9 L8.0 50.0 L8.2 48.1 L8.2 46.2 L8.1 44.3 L8.0 42.4 L7.9 40.4 L8.1 38.4 L8.5 36.5 L9.1 34.6 L9.8 32.8 L10.7 31.1 L11.5 29.3 L12.3 27.5 L13.1 25.7 L14.0 23.8 L14.9 22.0 L16.1 20.4 L17.5 18.9 L19.1 17.7 L21.0 16.8 L23.0 16.1 L25.0 15.6 L26.9 15.1 L28.8 14.5 L30.4 13.6 L32.0 12.5 L33.4 11.1 L34.8 9.4 L36.3 7.7 L37.9 6.0 L39.6 4.6 L41.6 3.6 L43.7 3.1 L45.8 3.1 L47.9 3.6 L50.0 4.3 L52.0 5.1 L54.0 6.0 L55.9 6.7 L57.7 7.3 L59.6 7.8 L61.5 8.2 L63.4 8.7 L65.3 9.2 L67.1 9.9 L68.9 10.8 L70.6 11.8 L72.2 12.8 L73.8 13.9 L75.5 14.9 L77.2 15.9 L79.0 16.8 L80.8 17.8 L82.6 18.8 L84.3 20.0 L85.7 21.5 L86.8 23.2 L87.5 25.2 L87.9 27.4 L88.0 29.6 L87.9 31.7 L87.9 33.8 L88.1 35.7 L88.6 37.5 L89.4 39.1 L90.5 40.7 L91.9 42.4 L93.3 44.1 L94.5 46.0 L95.5 48.0Z" fill="url(#sealG)" stroke="#7b0a1b" stroke-width="1.2" stroke-linejoin="round"/>
+            <circle cx="50" cy="50" r="31" fill="none" stroke="#ffd0d6" stroke-opacity=".5" stroke-width="2"/>
+            <text x="50" y="66" text-anchor="middle" class="st-script" fill="#ffe0e4" font-size="46">K</text>
+          </svg></div>
+          <div class="lt-deco lt-quill" aria-hidden="true"><svg viewBox="0 0 60 210">
+            <path d="M34 4 C58 36 60 108 26 170 C8 140 8 52 34 4Z" fill="url(#featherG)"/>
+            <path d="M31.0 34 L50.0 46M29.0 42 L11.0 56M29.4 54 L48.0 66M27.4 62 L11.6 76M27.8 74 L46.0 86M25.8 82 L12.2 96M26.2 94 L44.0 106M24.2 102 L12.8 116M24.6 114 L42.0 126M22.6 122 L13.4 136M23.0 134 L40.0 146M21.0 142 L14.0 156M21.4 154 L38.0 166M19.4 162 L14.6 176" fill="none" stroke="#ffbec6" stroke-opacity=".32" stroke-width="1.2" stroke-linecap="round"/>
+            <path d="M34 4 C28 70 22 130 20 188" fill="none" stroke="#f0a9b0" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M14 160 L27 160 L25 190 L17 190Z" fill="url(#nibG)"/>
+            <path d="M17 190 L25 190 L21 209Z" fill="#6b6f78"/>
+          </svg></div>
+        </div>
+        <button type="button" class="env-close" id="envClose">Fold it back 💌</button>
+      </div>
+    </section>
+
+    <!-- PERSONAL SECRET NOTE SECTION -->
+    <section class="note-section seamless-section" id="note-section">
+      <h2 class="section-title">Leave Me a Little Note</h2>
+      <p class="section-subtitle">Write something sweet, then press the button to save it 💌</p>
+      <textarea id="personalNote" class="note-textarea" placeholder="Write something sweet here..." aria-label="Personal Secret Note Input"></textarea>
+      <button type="button" class="save-note-btn" id="saveNoteBtn">💌 Save My Little Note</button>
+      <div class="save-status" id="saveStatus" role="status"></div>
+      <article class="saved-note" id="savedNote" hidden>
+        <span class="sn-pin" aria-hidden="true">📌</span>
+        <small class="sn-date" id="savedNoteDate"></small>
+        <p class="sn-text" id="savedNoteText"></p>
+      </article>
+    </section>
+
+    <!-- OPEN WHEN LETTERS SECTION -->
+    <section class="letters-section seamless-section" id="letters-section">
+      <h2 class="section-title">Open When... Envelopes</h2>
+      <p class="section-subtitle">Tap an envelope whenever you need a reminder 🤍</p>
+      <div class="letters-grid">
+        <button type="button" class="envelope-card" data-letter="miss" aria-label="Open when you miss me">
+          <div class="envelope-icon" aria-hidden="true">📩</div>
+          <h4>Open When You Miss Me...</h4>
+        </button>
+        <button type="button" class="envelope-card" data-letter="smile" aria-label="Open when you need a smile">
+          <div class="envelope-icon" aria-hidden="true">😊</div>
+          <h4>Open When You Need a Smile...</h4>
+        </button>
+        <button type="button" class="envelope-card" data-letter="stress" aria-label="Open when you are stressed">
+          <div class="envelope-icon" aria-hidden="true">🌧️</div>
+          <h4>Open When You're Stressing...</h4>
+        </button>
+      </div>
+    </section>
+
+
+    <!-- CLOSING SECTION -->
+    <section class="closing-section seamless-section" id="closing-section">
+      <p>This website may have an ending, but what I feel for you doesn't.</p>
+      <p>Every memory here is a reminder that loving you has become one of the most beautiful parts of my life.</p>
+      <p>Forever for Kashshaf, and may every chapter ahead bring us closer.</p>
+      <h2>Forever Yours 🤍</h2>
+    </section>
+
+  </main>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="letter-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="paper-letter">
+      <button type="button" class="close-btn" id="closeLetterBtn" aria-label="Close Letter">&times;</button>
+      <h3 id="modal-title">Letter Title</h3>
+      <p id="modal-body">Letter body content...</p>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="birdModal" role="dialog" aria-modal="true" aria-labelledby="birdModalTitle">
+    <div class="paper-letter">
+      <button type="button" class="close-btn" id="birdModalClose" aria-label="Close Letter">&times;</button>
+      <h3 id="birdModalTitle">A letter</h3>
+      <p id="birdModalBody"></p>
+    </div>
+  </div>
+
+  <div class="viewer" id="memViewer" role="dialog" aria-modal="true" aria-label="Memory viewer">
+    <button type="button" class="viewer-close" id="viewerClose" aria-label="Close">&times;</button>
+    <aside class="viewer-panel" id="viewerPanel">
+      <span class="vp-tag">A little message 💌</span>
+      <h3 id="viewerTitle"></h3>
+      <p id="viewerMsg"></p>
+    </aside>
+  </div>
+
+  <!-- GSAP & ScrollTrigger Libraries -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+  <!-- Main Modular JavaScript -->
+  <script defer src="script.js"></script>
+</body>
+</html>

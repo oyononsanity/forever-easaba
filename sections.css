@@ -1,0 +1,611 @@
+/* ============================================================
+   sections.css — redesigned sections (loaded after style.css)
+   1 welcome · 2 hero · 3 story clock · 4 cabin pass · 5 route · 6 song · 7 letter
+   ============================================================ */
+
+/* 1 — hello welcome (Apple-style handwriting reveal) */
+#hello-screen{position:fixed;inset:0;z-index:9998;display:grid;place-items:center;background:#000;opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s .9s}
+#hello-screen.show{opacity:1;visibility:visible;transition:opacity .5s ease}
+#hello-screen.leaving{opacity:0;visibility:hidden;transition:opacity .9s ease,visibility 0s .9s}
+.hello-word{margin:0;padding:.1em .25em;white-space:nowrap;color:#fff;font:400 clamp(3.2rem,13vw,8.5rem)/1.15 'Great Vibes','Snell Roundhand','Brush Script MT',cursive;text-shadow:0 0 28px rgba(255,255,255,.25);
+  -webkit-mask-image:linear-gradient(90deg,#000 44%,transparent 56%);mask-image:linear-gradient(90deg,#000 44%,transparent 56%);
+  -webkit-mask-size:300% 100%;mask-size:300% 100%;-webkit-mask-position:100% 0;mask-position:100% 0}
+#hello-screen.show .hello-word{animation:helloWrite 2.9s .4s cubic-bezier(.45,.05,.3,1) forwards}
+@keyframes helloWrite{to{-webkit-mask-position:0 0;mask-position:0 0}}
+
+/* 2 — hero: just the photograph */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;justify-content:center;padding:0 0 max(28px,env(safe-area-inset-bottom))}
+.hero-cue{position:relative;z-index:2;display:grid;justify-items:center;gap:10px;color:rgba(255,255,255,.85);text-decoration:none;font:500 .7rem/1 'Inter',sans-serif;letter-spacing:.32em;text-transform:uppercase}
+.hero-cue i{width:1px;height:46px;background:linear-gradient(#fff,transparent);animation:cue 2.2s ease-in-out infinite;transform-origin:top}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:0}}
+
+/* 3 — story clock */
+.story-clock{max-width:860px;margin:0 auto;padding:clamp(72px,12vw,140px) 20px;text-align:center;color:#fff}
+.sc-eyebrow{margin:0 0 14px;font:500 .72rem/1 'Inter',sans-serif;letter-spacing:.34em;text-transform:uppercase;opacity:.7}
+.sc-title{margin:0;font:600 clamp(2.4rem,7vw,4.4rem)/1.05 'Cormorant Garamond',Georgia,serif}
+.sc-lede{max-width:520px;margin:20px auto 0;font:400 clamp(1rem,2.4vw,1.15rem)/1.7 'Inter',sans-serif;opacity:.8}
+.rings{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,3vw,26px);margin:clamp(36px,6vw,60px) auto 0;max-width:620px}
+.ring{position:relative;aspect-ratio:1;display:grid;place-content:center;gap:2px}
+.ring svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:3.2;stroke-linecap:round}
+.ring .trk{stroke:rgba(255,255,255,.12)}
+.ring .bar{stroke:var(--accent,#d4a9e9);stroke-dasharray:276.46;stroke-dashoffset:276.46;transition:stroke-dashoffset .9s cubic-bezier(.3,.7,.2,1)}
+.ring b{font:600 clamp(1.3rem,5vw,2.3rem)/1 'Cormorant Garamond',Georgia,serif;font-variant-numeric:tabular-nums}
+.ring span{font:500 clamp(.5rem,1.7vw,.66rem)/1 'Inter',sans-serif;letter-spacing:.2em;text-transform:uppercase;opacity:.65}
+.journey{max-width:560px;margin:clamp(40px,7vw,64px) auto 0}
+.jr-line{position:relative;height:3px;border-radius:3px;background:rgba(255,255,255,.14)}
+.jr-line i{position:absolute;inset:0 auto 0 0;width:0;border-radius:3px;background:var(--accent,#d4a9e9);transition:width 1.4s cubic-bezier(.3,.7,.2,1)}
+.jr-line em{position:absolute;top:50%;left:0;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.16);transition:left 1.4s cubic-bezier(.3,.7,.2,1)}
+.jr-ends{display:flex;justify-content:space-between;align-items:flex-start;margin-top:16px;font:500 .8rem/1.3 'Inter',sans-serif}
+.jr-ends span{display:grid;gap:3px;text-align:left}.jr-ends span:last-child{text-align:right}
+.jr-ends small{font-size:.68rem;opacity:.6;letter-spacing:.08em}
+.jr-ends strong{font:600 1.15rem 'Cormorant Garamond',Georgia,serif;font-variant-numeric:tabular-nums}
+.since{margin:clamp(30px,5vw,44px) 0 0;font:italic 400 clamp(1.1rem,3vw,1.35rem)/1.5 'Cormorant Garamond',Georgia,serif}
+.since b{font-style:normal;font-size:1.4em;font-variant-numeric:tabular-nums}.since small{font-size:.8em;opacity:.65}
+
+/* 4 — full boarding pass inside the cabin */
+.cabin-pass{position:absolute;z-index:8;left:50%;top:50%;width:min(94vw,860px);max-height:calc(100svh - 28px);overflow:auto;opacity:0;border-radius:var(--radius-lg,18px);-webkit-overflow-scrolling:touch}
+.cabin-pass .boarding-pass-card{max-width:none;background:linear-gradient(135deg,#fffdf9,#f6e9ef);border-color:rgba(255,255,255,.9);box-shadow:0 30px 70px rgba(15,13,32,.4);color:#3f354d;-webkit-backdrop-filter:none;backdrop-filter:none}
+.cabin-pass .boarding-pass-card :is(div,span,strong,small):not(.boarding-stamp):not(.boarding-stamp *){color:#3f354d}
+.cabin-pass .detail-label,.cabin-pass .scratch-label{opacity:.6}
+.cabin-pass .notch{background:#c8c4d0}
+.flight-static-mode.flight-transition{height:auto;min-height:100svh;max-height:none;padding:24px 0}
+.flight-static-mode .flight-cabin{position:relative;inset:auto;opacity:1;min-height:calc(100svh - 48px);display:grid;place-items:center;transform:none}
+.flight-static-mode .cabin-pass{position:relative;left:auto;top:auto;transform:none;opacity:1}
+.flight-static-mode .flight-copy{display:none}
+@media(max-width:560px){.cabin-pass .stub-codes{display:none}.cabin-pass .pass-details-grid{gap:10px}}
+
+/* 5 — route */
+.rt-card{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);max-width:980px;margin:34px auto 0;border-radius:26px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:linear-gradient(160deg,#171428,#0e0c1a);box-shadow:0 30px 70px rgba(0,0,0,.35)}
+.rt-map svg{display:block;width:100%;height:100%;min-height:260px}
+.rt-river{fill:none;stroke:rgba(127,209,255,.22);stroke-width:16;stroke-linecap:round}
+.rt-lake{fill:rgba(127,209,255,.2)}
+.rt-road{fill:none;stroke:rgba(255,255,255,.09);stroke-width:7}
+.rt-glow{fill:none;stroke:#c9a7ff;stroke-width:14;stroke-linecap:round;opacity:.16}
+.route-dash{fill:none;stroke:url(#rtLine);stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.route-dash.route-draw{animation:rtDraw 3.2s cubic-bezier(.5,.1,.3,1) forwards}
+@keyframes rtDraw{to{stroke-dashoffset:0}}
+.rt-dot{fill:#fff;stroke:#c9a7ff;stroke-width:4}
+.rt-pin circle{fill:#2a2342;stroke:#ffb3c7;stroke-width:2.5}.rt-pin text{fill:#fff;font:600 12px 'Inter',sans-serif}
+.rt-end circle{fill:#ffb3c7;stroke:#fff}.rt-end text{fill:#2a2342;font-size:13px}
+.rt-stops{list-style:none;margin:0;padding:clamp(20px,3vw,32px);display:grid;align-content:center;gap:0;counter-reset:s;text-align:left}
+.rt-stops li{position:relative;padding:0 0 22px 44px;counter-increment:s;color:#fff}
+.rt-stops li:last-child{padding-bottom:0}
+.rt-stops li::before{content:counter(s);position:absolute;left:0;top:0;width:28px;height:28px;display:grid;place-items:center;border-radius:50%;border:1.5px solid #ffb3c7;font:600 .75rem 'Inter',sans-serif}
+.rt-stops li::after{content:"";position:absolute;left:13.5px;top:32px;bottom:4px;width:1px;background:rgba(255,255,255,.18)}.rt-stops li:last-child::after{display:none}
+.rt-stops b{display:block;font:600 1.15rem/1.2 'Cormorant Garamond',Georgia,serif}.rt-stops span{display:block;margin-top:3px;font:400 .82rem/1.4 'Inter',sans-serif;opacity:.65}
+.rt-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:26px}
+.rt-btn{display:inline-flex;align-items:center;min-height:46px;padding:0 24px;border-radius:999px;border:1px solid transparent;background:#fff;color:#241d38;font:600 .9rem 'Inter',sans-serif;text-decoration:none;cursor:pointer;transition:transform .2s}
+.rt-btn:hover{transform:translateY(-2px)}.rt-btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.35)}
+@media(max-width:760px){.rt-card{grid-template-columns:1fr}.rt-map svg{min-height:0;aspect-ratio:16/10}}
+
+/* 6 — song: one quiet card */
+.song-card{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:clamp(24px,5vw,52px);align-items:center;max-width:780px;margin:30px auto 0;padding:clamp(22px,4vw,38px);border-radius:28px;background:rgba(14,12,26,.55);border:1px solid rgba(255,255,255,.14);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);box-shadow:0 30px 70px rgba(0,0,0,.4);color:#fff;text-align:left}
+.song-art{position:relative;aspect-ratio:1}
+.song-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.45);z-index:2}
+.song-disc{position:absolute;top:6%;bottom:6%;right:-14%;aspect-ratio:1;border-radius:50%;background:repeating-radial-gradient(#15131f 0 2px,#0b0a12 3px 4px);box-shadow:0 10px 30px rgba(0,0,0,.4);transition:transform .8s cubic-bezier(.3,.7,.2,1)}
+.song-art.playing .song-disc{transform:translateX(14%) rotate(360deg);animation:spin 5s linear infinite}
+@keyframes spin{to{transform:translateX(14%) rotate(360deg)}}
+.song-kicker{margin:0 0 8px;font:500 .68rem/1 'Inter',sans-serif;letter-spacing:.3em;text-transform:uppercase;opacity:.6}
+.song-title{margin:0;font:600 clamp(1.7rem,4.5vw,2.4rem)/1.1 'Cormorant Garamond',Georgia,serif}
+.song-artist{margin:6px 0 0;font:400 .9rem/1.4 'Inter',sans-serif;opacity:.7}
+.song-wave{display:flex;align-items:center;gap:3px;height:34px;margin:22px 0 14px}
+.song-wave i{flex:1;max-width:6px;height:6px;border-radius:3px;background:rgba(255,255,255,.35);transition:height .3s}
+.song-art.playing~.song-body .song-wave i{animation:eq 1s ease-in-out infinite alternate;background:var(--accent,#d4a9e9)}
+.song-wave i:nth-child(3n){animation-delay:-.3s!important}.song-wave i:nth-child(3n+1){animation-delay:-.6s!important}.song-wave i:nth-child(5n){animation-duration:.7s!important}
+@keyframes eq{from{height:6px}to{height:30px}}
+
+/* ============================================================
+   VISUAL FIXES — countdown, centered background, eyes section,
+   and a more realistic flight/window transition
+   ============================================================ */
+
+/* Countdown: larger rings on desktop, comfortable 2x2 layout on phones */
+.story-clock {
+  width: 100%;
+  max-width: 900px;
+  box-sizing: border-box;
+  margin-inline: auto;
+}
+.rings {
+  width: min(100%, 760px);
+  max-width: 760px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 2.8vw, 28px);
+  align-items: stretch;
+}
+.rings .ring {
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  height: auto;
+  box-sizing: border-box;
+}
+.rings .ring svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.rings .ring b {
+  font-size: clamp(1.55rem, 3.1vw, 2.65rem);
+  line-height: 1;
+}
+.rings .ring span {
+  font-size: clamp(.58rem, 1vw, .72rem);
+  letter-spacing: .14em;
+}
+@media (max-width: 560px) {
+  .rings {
+    width: min(100%, 390px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 30px;
+  }
+  .rings .ring {
+    width: 100%;
+    max-width: 165px;
+    justify-self: center;
+  }
+  .rings .ring b {
+    font-size: clamp(1.8rem, 7vw, 2.35rem);
+  }
+  .rings .ring span {
+    font-size: .65rem;
+  }
+}
+
+/* BG-1: keep the important part of the photo centered */
+.bgz {
+  background-position: center center !important;
+  background-size: cover;
+}
+.bgz-1 {
+  animation: bgzCenterA 26s ease-in-out infinite alternate;
+}
+.bgz-2 {
+  background-position: center center !important;
+  animation: bgzCenterB 30s ease-in-out infinite alternate;
+}
+@keyframes bgzCenterA {
+  from { transform: scale(1.04); }
+  to   { transform: scale(1.13); }
+}
+@keyframes bgzCenterB {
+  from { transform: scale(1.13); }
+  to   { transform: scale(1.04); }
+}
+
+/* The Eyes I Remember — use the bundled image as a real full-bleed background */
+#eyes-memory-section.eyes-memory-section {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  max-width: none;
+  min-height: clamp(430px, 48vw, 620px);
+  box-sizing: border-box;
+  margin: 0;
+  padding: clamp(48px, 7vw, 86px) clamp(24px, 8vw, 112px);
+  overflow: hidden;
+  background-color: #090711;
+  background-image:
+    linear-gradient(90deg,
+      rgba(5, 5, 15, .04) 0%,
+      rgba(5, 5, 15, .20) 34%,
+      rgba(5, 5, 15, .72) 63%,
+      rgba(5, 5, 15, .92) 100%),
+    url("images/eyes-together.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  border-top: 1px solid rgba(255, 190, 220, .15);
+  border-bottom: 1px solid rgba(255, 190, 220, .15);
+}
+.eyes-memory-content {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 390px);
+  margin: 0;
+  color: #fff3fa;
+  text-shadow: 0 2px 22px rgba(0, 0, 0, .35);
+}
+.eyes-memory-label {
+  display: block;
+  margin: 0 0 18px;
+  color: #f1c6e0;
+  font-size: 10px;
+  letter-spacing: 3px;
+  line-height: 1.8;
+}
+.eyes-memory-content h2 {
+  margin: 0;
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(38px, 5vw, 62px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+.eyes-memory-divider {
+  width: 58px;
+  height: 1px;
+  margin: 22px 0;
+  background: #e9a9cf;
+}
+.eyes-memory-quote {
+  margin: 0 0 16px;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(21px, 2.5vw, 29px);
+  font-style: italic;
+  line-height: 1.55;
+}
+.eyes-memory-caption {
+  max-width: 320px;
+  margin: 0;
+  color: rgba(255, 243, 250, .82);
+  font-size: 12px;
+  line-height: 1.9;
+}
+.eyes-memory-heart {
+  position: absolute;
+  z-index: 2;
+  bottom: 26px;
+  left: clamp(20px, 4vw, 48px);
+  color: #ffc5e1;
+  font-size: 30px;
+  opacity: .9;
+  text-shadow: 0 0 18px rgba(255, 170, 220, .55);
+}
+@media (max-width: 600px) {
+  #eyes-memory-section.eyes-memory-section {
+    min-height: 520px;
+    padding: 42px 24px 52px;
+    justify-content: center;
+    background-image:
+      linear-gradient(0deg,
+        rgba(5, 5, 15, .90) 0%,
+        rgba(5, 5, 15, .54) 43%,
+        rgba(5, 5, 15, .10) 100%),
+      url("images/eyes-together.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+  .eyes-memory-content {
+    width: min(100%, 390px);
+    margin-top: 145px;
+    text-align: center;
+  }
+  .eyes-memory-divider { margin: 18px auto; }
+  .eyes-memory-caption { margin-inline: auto; }
+  .eyes-memory-heart { top: 18px; bottom: auto; left: 20px; }
+}
+
+/* More dimensional aircraft and a layered, realistic-looking window view */
+.flight-transition {
+  min-height: clamp(340px, 52vh, 560px);
+  background: linear-gradient(180deg, #a8c8e8 0%, #dce8f6 38%, #f8e8ec 76%, #e4d8ec 100%);
+}
+.flight-scene {
+  background:
+    radial-gradient(ellipse at 68% 24%, rgba(255,255,255,.9), transparent 28%),
+    linear-gradient(180deg, #82b3df 0%, #b8d4ee 38%, #e7e7f2 68%, #f6dce2 100%);
+}
+.flight-sky-glow {
+  background:
+    radial-gradient(ellipse at 64% 30%, rgba(255,255,255,.95), transparent 30%),
+    linear-gradient(165deg, rgba(255,255,255,.22), rgba(95,133,180,.12));
+}
+.cloud-layer {
+  background:
+    radial-gradient(ellipse at 12% 68%, #fff 0 12%, transparent 25%),
+    radial-gradient(ellipse at 28% 48%, #fff 0 17%, transparent 31%),
+    radial-gradient(ellipse at 48% 64%, #fdfdff 0 20%, transparent 34%),
+    radial-gradient(ellipse at 69% 43%, #fff 0 16%, transparent 29%),
+    radial-gradient(ellipse at 87% 65%, #fdfdff 0 18%, transparent 32%);
+}
+.flight-plane-model {
+  width: min(82vw, 900px);
+  opacity: 1;
+  filter: drop-shadow(0 24px 18px rgba(37, 58, 87, .28));
+  transform-origin: 50% 50%;
+}
+.flight-plane-model svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.flight-window-portal {
+  border: clamp(10px, 1.5vw, 19px) solid #f5f4f8;
+  outline: 2px solid rgba(95, 105, 130, .42);
+  outline-offset: 3px;
+  border-radius: 46% 46% 40% 40%;
+  background: #8dbce4;
+  box-shadow:
+    0 0 0 8px rgba(75, 86, 116, .15),
+    inset 0 0 0 2px rgba(255,255,255,.8),
+    inset 0 0 26px rgba(29, 54, 86, .28),
+    0 24px 65px rgba(31, 51, 87, .32);
+}
+.portal-sky {
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 70% 20%, rgba(255,255,255,.98), transparent 28%),
+    linear-gradient(155deg, #79add9 0%, #c4ddf2 47%, #f8f7ff 72%, #9bbfe1 100%);
+}
+.portal-sky::before {
+  content: "";
+  position: absolute;
+  left: -18%;
+  right: -20%;
+  bottom: 8%;
+  height: 42%;
+  border-radius: 50%;
+  background:
+    radial-gradient(ellipse at 18% 75%, #fff 0 18%, transparent 37%),
+    radial-gradient(ellipse at 45% 60%, #fff 0 24%, transparent 43%),
+    radial-gradient(ellipse at 76% 78%, #fdfdff 0 20%, transparent 39%);
+  filter: blur(5px);
+}
+.portal-sky::after {
+  content: "";
+  position: absolute;
+  left: -20%;
+  right: -20%;
+  bottom: -14%;
+  height: 45%;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,.94), rgba(220,232,247,.88));
+  filter: blur(10px);
+}
+.portal-caption {
+  text-shadow: 0 1px 3px rgba(255,255,255,.9);
+}
+.flight-cabin {
+  background:
+    radial-gradient(ellipse at 50% 8%, rgba(255,255,255,.98), transparent 38%),
+    linear-gradient(135deg, #e9e8f0 0%, #bcbacb 48%, #737286 100%);
+}
+.cabin-window-row i {
+  border: 8px solid #f8f6fb;
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.8),
+    0 7px 16px rgba(35,37,63,.22);
+  background:
+    radial-gradient(ellipse at 68% 20%, rgba(255,255,255,.98), transparent 26%),
+    linear-gradient(155deg, #7caed9 0%, #dceafa 54%, #fff 100%);
+}
+@media (max-width: 600px) {
+  .flight-transition { min-height: 360px; }
+  .flight-plane-model { width: 112vw; }
+}
+
+/* DREAMY ROMANTIC PASS — full-bleed route hero, memory carousel, quote chapters, lyrics panel */
+#route-map-section.route-map-section {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  overflow: hidden;
+  background: #241b31;
+  color: #fff8fd;
+}
+#route-map-section.route-map-section::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background: url("images/bg-1.jpg") center center / cover no-repeat;
+  transform: scale(1.015);
+}
+#route-map-section.route-map-section::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(28,18,43,.62), rgba(40,24,52,.78)), radial-gradient(ellipse at 50% 0%, rgba(235,190,236,.22), transparent 62%);
+  pointer-events: none;
+}
+#route-map-section > * { position: relative; }
+#route-map-section .route-kicker { color: rgba(255,232,248,.82); }
+#route-map-section .section-title,
+#route-map-section h2#routeMapTitle {
+  color: #fff0fb;
+  text-shadow: 0 3px 24px rgba(32,12,42,.52), 0 0 24px rgba(232,188,242,.22);
+}
+#route-map-section .section-subtitle { color: rgba(255,244,252,.86); }
+#route-map-section .rt-card { background: rgba(26,20,40,.62); border-color: rgba(255,228,248,.24); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+#route-map-section .route-disclaimer { color: rgba(255,240,250,.72); }
+
+.dreamy-memory-carousel,
+.dreamy-quote-chapter {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff8fd;
+  background: #211a30;
+}
+.dreamy-memory-carousel {
+  padding: clamp(76px, 10vw, 132px) clamp(16px, 4vw, 52px) clamp(68px, 8vw, 100px);
+  text-align: center;
+  background: radial-gradient(ellipse at 18% 15%, rgba(227,181,235,.2), transparent 36%), radial-gradient(ellipse at 82% 78%, rgba(255,183,218,.15), transparent 38%), linear-gradient(145deg,#211a30,#30223e 52%,#241b35);
+}
+.dreamy-section-glow { position:absolute; z-index:-1; inset:-20%; pointer-events:none; background:radial-gradient(ellipse at 50% 50%,rgba(220,185,245,.11),transparent 58%); filter:blur(24px); }
+.dreamy-kicker { display:block; margin:0 0 14px; color:#e8c9f2; font:600 .68rem/1.4 'Inter',sans-serif; letter-spacing:.24em; text-transform:uppercase; }
+.dreamy-memory-carousel .section-title { color:#fff1fa; text-shadow:0 0 28px rgba(224,179,239,.18); }
+.dreamy-memory-carousel .section-subtitle { max-width:620px; margin:12px auto 32px; color:rgba(255,240,250,.73); }
+.dreamy-carousel-shell { display:grid; grid-template-columns:48px minmax(0,1fr) 48px; gap:clamp(8px,2vw,20px); align-items:center; max-width:1050px; margin:0 auto; }
+.dreamy-carousel-window { min-width:0; overflow:hidden; border-radius:30px; outline-offset:6px; touch-action:pan-y; }
+.dreamy-carousel-track { display:flex; width:100%; transform:translateX(0); transition:transform .8s cubic-bezier(.22,.75,.2,1); will-change:transform; }
+.dreamy-memory-card { position:relative; flex:0 0 100%; min-width:0; aspect-ratio:16/9; overflow:hidden; border:1px solid rgba(255,232,250,.28); border-radius:30px; background:#382840; box-shadow:0 26px 75px rgba(5,2,15,.34); text-align:left; }
+.dreamy-memory-card::after { content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(21,13,31,.02) 10%,rgba(24,14,34,.15) 38%,rgba(20,12,31,.88) 100%); pointer-events:none; }
+.dreamy-memory-card img { display:block; width:100%; height:100%; object-fit:cover; object-position:center; transform:scale(1.015); transition:transform 1.2s cubic-bezier(.2,.7,.2,1),filter .8s ease; }
+.dreamy-memory-card.is-active img { transform:scale(1.06); }
+.dreamy-card-glass { position:absolute; z-index:1; left:clamp(18px,4vw,42px); right:clamp(18px,4vw,42px); bottom:clamp(18px,4vw,40px); max-width:560px; padding:clamp(16px,2.6vw,26px); border:1px solid rgba(255,241,252,.25); border-radius:22px; background:rgba(34,23,45,.36); -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); box-shadow:0 12px 38px rgba(12,6,20,.14); }
+.dreamy-card-glass span { color:#f2d5f0; font:600 .62rem/1.4 'Inter',sans-serif; letter-spacing:.18em; }
+.dreamy-card-glass h3 { margin:8px 0 5px; color:#fff6fd; font:600 clamp(1.55rem,3.4vw,2.5rem)/1.08 'Cormorant Garamond',Georgia,serif; }
+.dreamy-card-glass p { margin:0; color:rgba(255,243,252,.88); font:italic clamp(.94rem,1.6vw,1.1rem)/1.5 'Cormorant Garamond',Georgia,serif; }
+.dreamy-carousel-arrow { display:grid; place-items:center; width:46px; height:46px; padding:0; border:1px solid rgba(255,231,250,.28); border-radius:50%; color:#fff2fb; background:rgba(255,244,253,.09); font:300 2rem/1 'Cormorant Garamond',Georgia,serif; cursor:pointer; -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); transition:transform .25s ease,background .25s ease,border-color .25s ease; }
+.dreamy-carousel-arrow:hover { transform:scale(1.07); background:rgba(226,192,244,.2); border-color:rgba(255,231,250,.55); }
+.dreamy-carousel-footer { display:flex; align-items:center; justify-content:center; gap:18px; margin-top:22px; color:rgba(255,235,250,.7); font:500 .68rem 'Inter',sans-serif; letter-spacing:.14em; }
+.dreamy-carousel-dots { display:flex; gap:8px; align-items:center; }
+.dreamy-dot { width:7px; height:7px; padding:0; border:0; border-radius:50%; background:rgba(255,240,252,.32); cursor:pointer; transition:width .3s ease,background .3s ease; }
+.dreamy-dot.is-active { width:24px; border-radius:99px; background:#edc8ef; }
+.dreamy-quote-chapter { display:grid; place-items:center; min-height:clamp(420px,65vh,700px); padding:clamp(42px,8vw,100px) 22px; background-position:center; background-size:cover; background-repeat:no-repeat; }
+.quote-chapter-one { background-image:linear-gradient(90deg,rgba(32,20,43,.65),rgba(39,25,48,.38)),url("images/vibe-5.jpg"); }
+.quote-chapter-two { background-image:linear-gradient(90deg,rgba(35,21,46,.35),rgba(35,21,46,.72)),url("images/roadmap-7.jpg"); }
+.dreamy-quote-chapter::before { content:""; position:absolute; inset:0; z-index:-1; background:radial-gradient(ellipse at 50% 50%,rgba(213,174,239,.18),transparent 62%); }
+.dreamy-quote-panel { width:min(760px,100%); padding:clamp(26px,5vw,54px); border:1px solid rgba(255,238,251,.3); border-radius:30px; background:rgba(37,25,48,.38); box-shadow:0 25px 80px rgba(13,5,20,.2); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); text-align:center; }
+.dreamy-quote-panel p { margin:0; color:#fff3fb; font:italic clamp(1.9rem,4.8vw,3.7rem)/1.2 'Cormorant Garamond',Georgia,serif; text-wrap:balance; text-shadow:0 3px 24px rgba(20,8,30,.3); }
+.dreamy-quote-line { display:block; width:58px; height:1px; margin:24px auto 0; background:linear-gradient(90deg,#f4d6ef,#cdb7f3); }
+
+/* Music card: player on the left, synchronized lyrics on the right */
+#featuredMusicSection { --lyrics-pink:#f1cde8; --lyrics-lavender:#d8c6ff; }
+#featuredMusicSection .song-card { grid-template-columns:minmax(0,1fr); gap:clamp(20px,3vw,34px); align-items:stretch; width:min(1120px,100%); max-width:1120px; padding:clamp(18px,3vw,32px); border-color:rgba(242,214,250,.24); background:linear-gradient(135deg,rgba(39,27,53,.76),rgba(47,31,62,.58)); box-shadow:0 28px 80px rgba(11,5,20,.32); }
+.song-player-column { display:flex; flex-direction:column; justify-content:center; min-width:0; }
+.song-player-main { display:grid; grid-template-columns:minmax(150px,.72fr) minmax(0,1fr); gap:clamp(18px,2.8vw,30px); align-items:center; min-width:0; }
+#featuredMusicSection .song-art { width:100%; min-width:0; }
+#featuredMusicSection .song-body { min-width:0; }
+.song-player-footnote { margin:20px 0 0; padding-top:14px; border-top:1px solid rgba(255,236,251,.12); color:rgba(255,238,251,.58); font:italic .9rem/1.5 'Cormorant Garamond',Georgia,serif; }
+.lyrics-panel { display:flex; flex-direction:column; min-width:0; min-height:360px; padding:clamp(20px,3vw,30px); border:1px solid rgba(246,221,252,.22); border-radius:23px; background:linear-gradient(155deg,rgba(237,211,248,.11),rgba(255,222,240,.045)); box-shadow:inset 0 1px 0 rgba(255,255,255,.08); text-align:left; }
+.lyrics-panel-top { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.lyrics-kicker { color:#e6c9f2; font:600 .62rem 'Inter',sans-serif; letter-spacing:.2em; }
+.lyrics-live-dot { width:7px; height:7px; border-radius:50%; background:#e9bde6; box-shadow:0 0 14px rgba(233,189,230,.75); }
+.lyrics-heading { margin:10px 0 14px; color:#fff2fc; font:600 clamp(1.8rem,3.2vw,2.5rem)/1 'Cormorant Garamond',Georgia,serif; }
+.lyrics-empty { margin:auto 0; color:rgba(255,240,252,.62); font:italic 1.12rem/1.7 'Cormorant Garamond',Georgia,serif; }
+.lyrics-scroll { max-height:330px; overflow:auto; overscroll-behavior:contain; padding:12px 6px 12px 0; scrollbar-width:thin; scrollbar-color:rgba(222,190,240,.5) transparent; mask-image:linear-gradient(transparent,black 8%,black 92%,transparent); }
+.lyric-line { margin:12px 0; color:rgba(255,239,250,.42); font:500 clamp(1rem,1.6vw,1.2rem)/1.5 'Cormorant Garamond',Georgia,serif; transition:color .35s ease,opacity .35s ease,transform .35s ease,text-shadow .35s ease; }
+.lyric-line.is-past { color:rgba(255,239,250,.57); }
+.lyric-line.is-current { color:#fff4fc; opacity:1; transform:translateX(5px) scale(1.015); text-shadow:0 0 22px rgba(226,184,247,.35); }
+.lyrics-timing-note { margin:auto 0 0; padding-top:14px; color:rgba(255,234,249,.48); font:400 .72rem/1.6 'Inter',sans-serif; }
+@media (max-width:760px) {
+  .dreamy-carousel-shell { grid-template-columns:34px minmax(0,1fr) 34px; gap:6px; }
+  .dreamy-carousel-arrow { width:34px; height:34px; font-size:1.65rem; }
+  .dreamy-memory-card { aspect-ratio:4/5; border-radius:24px; }
+  .dreamy-memory-card img { object-position:center; }
+  .dreamy-card-glass { left:12px; right:12px; bottom:12px; padding:16px; border-radius:18px; }
+  .dreamy-quote-chapter { min-height:480px; }
+  #featuredMusicSection .song-card { grid-template-columns:minmax(0,1fr); max-width:620px; }
+  .song-player-main { grid-template-columns:minmax(120px,.7fr) minmax(0,1fr); gap:18px; }
+  .lyrics-panel { min-height:280px; }
+  .lyrics-scroll { max-height:250px; }
+}
+@media (max-width:430px) {
+  .dreamy-memory-carousel { padding-inline:10px; }
+  .dreamy-carousel-shell { grid-template-columns:28px minmax(0,1fr) 28px; }
+  .dreamy-carousel-arrow { width:28px; height:34px; }
+  .dreamy-memory-card { aspect-ratio:3/4; }
+  .song-player-main { grid-template-columns:minmax(0,1fr); }
+  #featuredMusicSection .song-art { width:min(72%,240px); margin:0 auto 8px; }
+  #featuredMusicSection .song-body { text-align:center; }
+  #featuredMusicSection .song-wave { justify-content:center; }
+  #featuredMusicSection .song-progress { max-width:360px; margin-inline:auto; }
+  #route-map-section .rt-card { border-radius:22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dreamy-carousel-track, .dreamy-memory-card img, .dreamy-carousel-arrow, .lyric-line { transition:none!important; }
+}
+
+
+/* FULL-BLEED MEMORY CHAPTERS — match the immersive Eyes section */
+#eyes-memory-section.eyes-memory-section,
+#dreamy-memory-carousel.dreamy-memory-carousel,
+.dreamy-quote-chapter {
+  width: 100%; max-width: none; min-height: 100svh;
+  box-sizing: border-box; margin: 0; border-radius: 0;
+}
+#eyes-memory-section.eyes-memory-section {
+  min-height: 100svh; background-size: cover; background-position: center center;
+}
+#dreamy-memory-carousel.dreamy-memory-carousel {
+  display: flex; flex-direction: column; justify-content: center; align-items: stretch;
+  text-align: left; padding: clamp(64px, 8vw, 110px) clamp(22px, 8vw, 112px);
+  background: #1e1729;
+}
+#dreamy-memory-carousel.dreamy-memory-carousel::before,
+.dreamy-quote-chapter::before {
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background-size: cover; background-position: center center; background-repeat: no-repeat;
+  transform: scale(1.015);
+}
+#dreamy-memory-carousel.dreamy-memory-carousel::before { background-image: url("images/bg-2.jpg"); }
+#dreamy-memory-carousel.dreamy-memory-carousel::after,
+.dreamy-quote-chapter::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(13,9,22,.10) 0%, rgba(18,10,26,.40) 42%, rgba(18,10,27,.84) 100%),
+              linear-gradient(0deg, rgba(15,10,23,.30), rgba(15,10,23,.06));
+}
+#dreamy-memory-carousel .dreamy-section-glow { z-index: 0; }
+#dreamy-memory-carousel .dreamy-kicker,
+#dreamy-memory-carousel .section-title,
+#dreamy-memory-carousel .section-subtitle,
+#dreamy-memory-carousel .dreamy-carousel-shell,
+#dreamy-memory-carousel .dreamy-carousel-footer { position: relative; z-index: 1; }
+#dreamy-memory-carousel .section-title { max-width: 760px; color: #fff0fb; text-shadow: 0 3px 28px rgba(18,8,26,.65); }
+#dreamy-memory-carousel .section-subtitle { max-width: 590px; margin: 12px 0 30px; color: rgba(255,244,252,.88); }
+#dreamy-memory-carousel .dreamy-carousel-shell { width: min(100%, 1080px); margin: 0 auto; }
+#dreamy-memory-carousel .dreamy-memory-card {
+  min-height: clamp(360px, 52vh, 570px); border: 1px solid rgba(255,235,250,.35);
+  border-radius: 28px; box-shadow: 0 24px 80px rgba(10,6,18,.36);
+}
+#dreamy-memory-carousel .dreamy-memory-card img { object-fit: cover; object-position: center; }
+#dreamy-memory-carousel .dreamy-card-glass {
+  background: linear-gradient(0deg, rgba(20,12,29,.88), rgba(20,12,29,.10));
+  -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px);
+}
+#dreamy-memory-carousel .dreamy-carousel-arrow,
+#dreamy-memory-carousel .dreamy-carousel-dots button {
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  background-color: rgba(247,221,244,.18); border-color: rgba(255,235,250,.42); color: #fff4fc;
+}
+.dreamy-quote-chapter {
+  display: flex; align-items: center; justify-content: flex-end;
+  padding: clamp(52px, 8vw, 110px) clamp(24px, 8vw, 112px);
+  background-color: #1b1425; isolation: isolate;
+}
+.dreamy-quote-chapter.quote-chapter-one::before { background-image: url("images/roadmap-5.jpg"); }
+.dreamy-quote-chapter.quote-chapter-two::before { background-image: url("images/vibe-5.jpg"); }
+.dreamy-quote-chapter::after {
+  background: linear-gradient(90deg, rgba(10,7,18,.04) 0%, rgba(14,9,22,.30) 38%, rgba(14,9,22,.82) 100%),
+              linear-gradient(0deg, rgba(15,10,23,.24), rgba(15,10,23,.08));
+}
+.dreamy-quote-panel {
+  width: min(100%, 560px); margin: 0; padding: clamp(24px, 4vw, 42px);
+  border: 1px solid rgba(255,229,248,.27); border-radius: 28px;
+  background: linear-gradient(135deg, rgba(46,31,58,.44), rgba(28,19,39,.28));
+  box-shadow: 0 20px 70px rgba(9,5,17,.24);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  color: #fff3fb; text-shadow: 0 2px 18px rgba(10,5,18,.35);
+}
+.dreamy-quote-panel .dreamy-kicker { color: #f1cbe8; letter-spacing: .22em; }
+.dreamy-quote-panel p {
+  margin: 18px 0 24px; color: #fff5fc;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(28px, 3.4vw, 46px); line-height: 1.3; font-weight: 500;
+}
+.dreamy-quote-line {
+  display: block; width: 76px; height: 2px; border-radius: 999px;
+  background: linear-gradient(90deg, #f5c7e4, #d8c2ff); box-shadow: 0 0 18px rgba(232,190,244,.55);
+}
+#featuredMusicSection .lyrics-panel {
+  background: rgba(39,27,52,.58); border: 1px solid rgba(255,226,248,.25);
+  -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+}
+#featuredMusicSection .lyric-line { transition: opacity .35s ease, transform .35s ease, color .35s ease; }
+#featuredMusicSection .lyric-line.is-current { color: #fff0fa; text-shadow: 0 0 22px rgba(234,184,244,.32); }
+@media (max-width: 700px) {
+  #eyes-memory-section.eyes-memory-section,
+  #dreamy-memory-carousel.dreamy-memory-carousel,
+  .dreamy-quote-chapter { min-height: 88svh; }
+  #dreamy-memory-carousel.dreamy-memory-carousel { padding: 72px 18px 64px; }
+  #dreamy-memory-carousel .dreamy-carousel-shell { grid-template-columns: 34px minmax(0,1fr) 34px; gap: 7px; }
+  #dreamy-memory-carousel .dreamy-memory-card { min-height: 54vh; }
+  .dreamy-quote-chapter { justify-content: center; padding: 56px 18px; }
+  .dreamy-quote-chapter::after { background: linear-gradient(0deg, rgba(13,8,21,.75), rgba(13,8,21,.15) 80%); }
+  .dreamy-quote-panel { padding: 24px 22px; border-radius: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #dreamy-memory-carousel.dreamy-memory-carousel::before,
+  .dreamy-quote-chapter::before { transform: none; }
+}
